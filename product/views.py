@@ -1,7 +1,12 @@
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
 
+from product.models import Product
+
 def index(request):
-    return render(request,"product/index.html")
+    products = Product.objects.all()
+
+    return render(request,"product/index.html",{products:products})
 
 
 def productDetails(request, id):
@@ -9,19 +14,39 @@ def productDetails(request, id):
 
 
 def searchProduct(request):
-    package_query = request.GET.get("t", "").strip()
-    
-    # packages = (
-    #     TravelPackage.objects.prefetch_related('images').filter(name__istartswith=package_query)
-    #     if package_query
-    #     else TravelPackage.objects.prefetch_related('images').all()
-    # )
+    search_query = request.GET.get("s", "").strip()
+    minPrice_query = request.GET.get("min-price", "").strip()
+    maxPrice_query = request.GET.get("max-price", "").strip()
+    category_query = request.GET.get("c", "").strip()
 
-    # paginator = Paginator(packages, 9)
-    # page_number = request.GET.get('page')
-    # page_obj = paginator.get_page(page_number)
+    products = Product.objects.all()
 
-    return render(request, 'product/search.html', {
-        # 'page_obj': page_obj,
-        'query': package_query,
-    })
+    # Search by name or description
+    if search_query:
+        products = products.filter(
+            Q(name__icontains=search_query) |
+            Q(description__icontains=search_query)
+        )
+
+    # Filter by minimum price
+    if minPrice_query:
+        products = products.filter(price__gte=minPrice_query)
+
+    # Filter by maximum price
+    if maxPrice_query:
+        products = products.filter(price__lte=maxPrice_query)
+
+    # Filter by category slug
+    if category_query:
+        products = products.filter(category__slug=category_query)
+
+    context = {
+        "products": products,
+        "search_query": search_query,
+        "min_price": minPrice_query,
+        "max_price": maxPrice_query,
+        "category_query": category_query,
+    }
+    print(context)
+
+    return render(request, "product/search.html", context)
