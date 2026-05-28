@@ -13,6 +13,17 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def get_ancestors(self):
+        ancestors = []
+        current = self.parent
+        while current is not None:
+            ancestors.insert(0, current)
+            current = current.parent
+        return ancestors
+
+    def get_breadcrumb(self):
+        return self.get_ancestors() + [self]
 
 
 class Product(models.Model):

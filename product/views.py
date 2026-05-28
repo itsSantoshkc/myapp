@@ -4,14 +4,39 @@ from django.shortcuts import get_object_or_404, render
 from product.models import Product
 
 def index(request):
-    products = Product.objects.all()
+    products = Product.objects.select_related(
+    'category'
+).prefetch_related(
+    'images',
+    'variants'
+)
 
     return render(request,"product/index.html",{products:products})
 
 
 def productDetails(request, id):
-    return render(request,"product/product_details.html", {"id": id})
 
+    product = get_object_or_404(
+    Product.objects.prefetch_related('images', 'variants')
+    .select_related(
+        'category',
+        'category__parent',
+        'category__parent__parent',
+        'category__parent__parent__parent',
+    ),
+    id=id
+    )
+
+    breadcrumb = product.category.get_breadcrumb()
+
+    return render(
+        request,
+        "product/product_details.html",
+        {
+            "product": product,
+            "categories" : breadcrumb
+        }
+    )
 
 def searchProduct(request):
     search_query = request.GET.get("s", "").strip()
@@ -30,11 +55,11 @@ def searchProduct(request):
 
     # Filter by minimum price
     if minPrice_query:
-        products = products.filter(price__gte=minPrice_query)
+        products = products.filter(base_price__gte=minPrice_query)
 
     # Filter by maximum price
     if maxPrice_query:
-        products = products.filter(price__lte=maxPrice_query)
+        products = products.filter(base_price__lte=maxPrice_query)
 
     # Filter by category slug
     if category_query:
@@ -47,6 +72,6 @@ def searchProduct(request):
         "max_price": maxPrice_query,
         "category_query": category_query,
     }
-    print(context)
+
 
     return render(request, "product/search.html", context)
