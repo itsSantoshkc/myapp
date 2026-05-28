@@ -1,0 +1,227 @@
+{% extends 'product/template.html' %}
+{% load static %}
+{% block title %}Graphics Processing Units{% endblock %}
+{% block content %}
+<body class="bg-background text-on-background selection:bg-primary-container selection:text-white">
+
+<main class="max-w-[1440px] mx-auto px-margin-desktop py-lg flex gap-lg">
+<!-- Sidebar Filters -->
+<aside class="w-64 flex-shrink-0 hidden md:block">
+<div class="sticky top-[88px]">
+<div class="flex items-center gap-sm mb-lg">
+<span class="material-symbols-outlined text-primary">filter_list</span>
+<h2 class="font-headline-md text-on-surface text-[18px] font-bold uppercase tracking-tight">Technical Filters</h2>
+</div>
+<div class="space-y-xl">
+<!-- Price Range -->
+<section>
+<h3 class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant mb-md">Price Range (USD)</h3>
+<div class="space-y-sm">
+<input class="w-full accent-primary-container" max="5000" min="0" type="range"/>
+<div class="flex justify-between font-label-sm text-on-secondary-fixed-variant">
+<span>$0</span>
+<span>$5,000+</span>
+</div>
+</div>
+</section>
+<!-- CPU Socket -->
+<section>
+<h3 class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant mb-md">CPU Socket</h3>
+<div class="space-y-xs">
+<label class="flex items-center gap-sm cursor-pointer group">
+<input class="w-4 h-4 rounded-sm border-outline-variant text-primary-container focus:ring-primary-container" type="checkbox"/>
+<span class="font-body-md group-hover:text-primary transition-colors">LGA 1700</span>
+</label>
+<label class="flex items-center gap-sm cursor-pointer group">
+<input checked="" class="w-4 h-4 rounded-sm border-outline-variant text-primary-container focus:ring-primary-container" type="checkbox"/>
+<span class="font-body-md group-hover:text-primary transition-colors">AM5</span>
+</label>
+<label class="flex items-center gap-sm cursor-pointer group">
+<input class="w-4 h-4 rounded-sm border-outline-variant text-primary-container focus:ring-primary-container" type="checkbox"/>
+<span class="font-body-md group-hover:text-primary transition-colors">AM4</span>
+</label>
+</div>
+</section>
+<!-- Memory Type -->
+<section>
+<h3 class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant mb-md">Memory</h3>
+<div class="flex flex-wrap gap-xs">
+<button class="px-sm py-xs bg-primary-container text-white font-label-sm rounded-lg">DDR5</button>
+<button class="px-sm py-xs bg-surface-container text-on-surface-variant font-label-sm rounded-lg hover:bg-surface-container-high transition-colors">DDR4</button>
+<button class="px-sm py-xs bg-surface-container text-on-surface-variant font-label-sm rounded-lg hover:bg-surface-container-high transition-colors">ECC</button>
+</div>
+</section>
+<!-- Brand -->
+<section>
+<h3 class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant mb-md">Primary Vendors</h3>
+<div class="space-y-xs">
+<label class="flex items-center gap-sm cursor-pointer group">
+<input class="w-4 h-4 rounded-sm border-outline-variant text-primary-container focus:ring-primary-container" type="checkbox"/>
+<span class="font-body-md group-hover:text-primary transition-colors">Titan Forge</span>
+</label>
+<label class="flex items-center gap-sm cursor-pointer group">
+<input class="w-4 h-4 rounded-sm border-outline-variant text-primary-container focus:ring-primary-container" type="checkbox"/>
+<span class="font-body-md group-hover:text-primary transition-colors">AeroStream</span>
+</label>
+</div>
+</section>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<section class="flex-grow">
+<!-- Header & Results Count -->
+<div class="flex justify-between items-end mb-lg border-b border-surface-container pb-sm">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Graphics Processing Units</h1>
+<p class="font-body-md text-on-surface-variant">Showing 128 results for "High-Performance GPUs"</p>
+</div>
+<div class="flex items-center gap-sm">
+<span class="font-label-md text-on-surface-variant uppercase tracking-widest">Sort by:</span>
+<select class="bg-transparent border-none font-body-md font-semibold text-primary focus:ring-0 cursor-pointer">
+<option>Performance (High to Low)</option>
+<option>Price (Low to High)</option>
+<option>Release Date</option>
+</select>
+</div>
+</div>
+<!-- Hardware Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-lg">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest border border-surface-container rounded-xl overflow-hidden group hover:border-primary-container transition-all duration-300">
+<div class="relative h-48 bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A professional close-up of a Titan Forge RTX 4090 graphics card featuring three high-performance fans and brushed metal aesthetics. The lighting is crisp and surgical, emphasizing the technical precision of the hardware against a clean white background. Retro orange accents on the hardware glow subtly, reflecting a modern light-mode engineering style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9DeY9k0b2t5_PSKudiijpz2QFBmHCW4AlKQ5LBPOm66BPIBwZMnnjtrN99hEGiF_7Biog3KOUDi_K35R-7VBLHd3DqMrbOIeMnLfpQBcDx8wLgG4uyGjIu1K-hCswHoMABUz47kxea8YCWgPfmXHuZJICLSOsyrc0gLPbpYmldpYUGoZh9mVZ1Kd5K5ZLsWOZ5HX6yC98hWzhhzE5nra5YBRga4yXQqF4vocXgTLscM_nsA27FI-y0sw5gMXu3W-e_kq7jKJeYOE"/>
+<div class="absolute top-sm right-sm bg-primary-container text-white px-sm py-xs font-label-sm rounded shadow-lg">NEW RELEASE</div>
+</div>
+<div class="p-md space-y-md">
+<div>
+<div class="flex justify-between items-start">
+<span class="font-label-sm text-primary uppercase tracking-widest">Titan Forge</span>
+<span class="font-label-md font-bold text-on-surface">$1,699.00</span>
+</div>
+<h3 class="font-headline-md text-on-surface mt-xs">Titan Forge RTX 4090</h3>
+</div>
+<!-- Specs -->
+<div class="grid grid-cols-2 gap-sm border-t border-surface-container pt-sm">
+<div>
+<p class="font-label-sm text-on-surface-variant uppercase">VRAM</p>
+<p class="font-body-md font-medium">24GB GDDR6X</p>
+</div>
+<div>
+<p class="font-label-sm text-on-surface-variant uppercase">Clock</p>
+<p class="font-body-md font-medium">2.52 GHz</p>
+</div>
+</div>
+<button class="w-full bg-primary-container text-white py-sm font-label-md uppercase tracking-widest rounded hover:bg-[#E54E14] active:scale-95 transition-all flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">shopping_cart</span>
+                            Add to System
+                        </button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest border border-surface-container rounded-xl overflow-hidden group hover:border-primary-container transition-all duration-300">
+<div class="relative h-48 bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A sleek AeroStream RTX 4080 graphics card with a white and silver shroud design, featuring optimized airflow cooling fins. The image is set in a high-key studio environment with soft shadows and professional lighting. The color palette is dominated by off-whites and slate grays with a single sharp retro orange focus light hitting the corner." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJxi7cUDK6V1Ncs496Qj_IUzHfRYFtXoVyuO8IB3eytnL_2VrdyGtJX2yavdUEO2hmHlCA60vMSRe1FHiWdtrf_57sEjILhFRpnGPjpB86v-neXimmqEJmutWgQ-xOTFXwKm4jxxIHAyRry3xiVAbBzedaJuJbJV9gu4cDOuyUwMIBlLUZt1e-MAy-n72tZk25mgPwqDBxh6MGPG2b3DBJsid1Znkd-kehi3vKP90_KGVRnifi4RRZNWoC2AY6AMIaebSAIgqZR6g"/>
+<div class="absolute top-sm right-sm bg-secondary text-white px-sm py-xs font-label-sm rounded shadow-lg">IN STOCK</div>
+</div>
+<div class="p-md space-y-md">
+<div>
+<div class="flex justify-between items-start">
+<span class="font-label-sm text-primary uppercase tracking-widest">AeroStream</span>
+<span class="font-label-md font-bold text-on-surface">$1,199.00</span>
+</div>
+<h3 class="font-headline-md text-on-surface mt-xs">AeroStream RTX 4080</h3>
+</div>
+<div class="grid grid-cols-2 gap-sm border-t border-surface-container pt-sm">
+<div>
+<p class="font-label-sm text-on-surface-variant uppercase">VRAM</p>
+<p class="font-body-md font-medium">16GB GDDR6X</p>
+</div>
+<div>
+<p class="font-label-sm text-on-surface-variant uppercase">Fans</p>
+<p class="font-body-md font-medium">Triple Axial</p>
+</div>
+</div>
+<button class="w-full bg-primary-container text-white py-sm font-label-md uppercase tracking-widest rounded hover:bg-[#E54E14] active:scale-95 transition-all flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">shopping_cart</span>
+                            Add to System
+                        </button>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest border border-surface-container rounded-xl overflow-hidden group hover:border-primary-container transition-all duration-300">
+<div class="relative h-48 bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A detailed view of a high-end motherboard circuit board focusing on the PCIe slot area. The lighting is technical and sharp, highlighting the copper traces and electronic components with surgical clarity. The style is industrial and professional, utilizing a minimal light mode aesthetic with high-contrast structural details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaBjt9a9JkT1SB1wyLVbAvsod_yME6n91PG9w9hI9eaMHKJrrTiDP_IrQOhkhIiqUgwOiOFg9dkiiR6UAstxgnWv6Zi3l3X0AYq6BeqL81h6QmpcNRP8Iz4Mi6pAlL003gTvcrhYVwokViLmIfhY7Pqpr42VcHfYORWcjoboEWfJw3530R8TJ8LZh2RvqwA74_Awqo3Q9I1VDrKeFtv41ASTa2sjjCeU-rL14O65FcIw8F2VU_3dXlNwhtOdy3uNoPbOPGSbickVI"/>
+</div>
+<div class="p-md space-y-md">
+<div>
+<div class="flex justify-between items-start">
+<span class="font-label-sm text-primary uppercase tracking-widest">Precision Pro</span>
+<span class="font-label-md font-bold text-on-surface">$599.00</span>
+</div>
+<h3 class="font-headline-md text-on-surface mt-xs">Precision RX 7900 XTX</h3>
+</div>
+<div class="grid grid-cols-2 gap-sm border-t border-surface-container pt-sm">
+<div>
+<p class="font-label-sm text-on-surface-variant uppercase">VRAM</p>
+<p class="font-body-md font-medium">24GB GDDR6</p>
+</div>
+<div>
+<p class="font-label-sm text-on-surface-variant uppercase">Interface</p>
+<p class="font-body-md font-medium">384-bit</p>
+</div>
+</div>
+<button class="w-full bg-primary-container text-white py-sm font-label-md uppercase tracking-widest rounded hover:bg-[#E54E14] active:scale-95 transition-all flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">shopping_cart</span>
+                            Add to System
+                        </button>
+</div>
+</div>
+</div>
+
+<!-- Pagination -->
+<div class="mt-xl flex justify-center items-center gap-sm">
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-surface-container hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary-container text-white font-label-md">1</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-surface-container hover:bg-surface-container transition-colors font-label-md">2</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-surface-container hover:bg-surface-container transition-colors font-label-md">3</button>
+<span class="px-sm font-label-md text-on-surface-variant">...</span>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-surface-container hover:bg-surface-container transition-colors font-label-md">12</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-surface-container hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</section>
+</main>
+
+<!-- Micro-interaction Scripts -->
+<script>
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('mousedown', () => {
+                el.classList.add('scale-95');
+            });
+            el.addEventListener('mouseup', () => {
+                el.classList.remove('scale-95');
+            });
+            el.addEventListener('mouseleave', () => {
+                el.classList.remove('scale-95');
+            });
+        });
+
+        // Search bar focus effect
+        const searchInput = document.querySelector('input[type="text"]');
+        if(searchInput) {
+            searchInput.addEventListener('focus', () => {
+                searchInput.parentElement.classList.add('w-80');
+                searchInput.parentElement.classList.remove('w-64');
+            });
+            searchInput.addEventListener('blur', () => {
+                searchInput.parentElement.classList.remove('w-80');
+                searchInput.parentElement.classList.add('w-64');
+            });
+        }
+    </script>
+</body>
+{% endblock %}
