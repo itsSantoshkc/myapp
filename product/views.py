@@ -53,15 +53,12 @@ def searchProduct(request):
             Q(description__icontains=search_query)
         )
 
-    # Filter by minimum price
     if minPrice_query:
         products = products.filter(base_price__gte=minPrice_query)
 
-    # Filter by maximum price
     if maxPrice_query:
         products = products.filter(base_price__lte=maxPrice_query)
 
-    # Filter by category slug
     if category_query:
         products = products.filter(category__slug=category_query)
 

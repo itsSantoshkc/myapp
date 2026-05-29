@@ -1,0 +1,190 @@
+{% extends 'components/header.html' %}
+{% block title %}Register - Precision PC{% endblock %}
+{% block layout %}
+
+<body
+    class="bg-surface font-body-md text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+    <main class="min-h-screen flex flex-col md:flex-row overflow-hidden">
+        <section
+            class="relative w-full md:w-1/2 lg:w-3/5 bg-surface-container overflow-hidden hidden md:flex items-center justify-center">
+            <div class="absolute inset-0 z-0">
+                <img alt="Precision hardware macro" class="w-full h-full object-cover"
+                    data-alt="A high-performance technical macro photograph of computer hardware internals, featuring a sleek, black-and-silver motherboard with exposed capacitors and copper heat pipes. The lighting is cold and clinical, with sharp highlights on the metallic surfaces against a deep slate background. Subtle orange LED accents pulse gently from within the components, reflecting the brand's 'Retro Orange' signature color. The overall mood is one of surgical precision and high-performance engineering."
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCff9QTTIgfGh3w_RXCqqvp_8bxt4ZNYAIAjAQKzHDS5HpjMjQVLEN2P2SG5ghaCVRMgdwZ-LjRb23VU6GeaT04NLyjaUpxBI6tqyi9zFz9r40jknPDavt_88kbN4oydT1PMiEVCKaRhx_8RaO-xwlmqY6eVn3NkRLXMY0GEmnUn5zk3k7BJsGxsYEeqEvC6wyjSOtNKSlwELCwoJBhj1ZcTBz5QXBV-uLVx5fwhi02xeiA_ucVBHd5oZ3veiRr8FtZYsX0L8XQGgs" />
+                <div
+                    class="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-transparent opacity-60">
+                </div>
+                <div class="absolute inset-0 bg-black/10"></div>
+            </div>
+            <div class="relative z-10 p-xl flex flex-col justify-between h-full w-full">
+                <div class="flex items-center gap-sm">
+                    <span
+                        class="font-headline-md text-headline-md font-bold text-primary-container font-bold text-on-surface uppercase tracking-tighter">Precision
+                        PC</span>
+                </div>
+                <div class="max-w-md">
+                    <div class="inline-flex items-center px-sm py-xs bg-primary-container mb-md">
+                        <span class="font-label-sm text-label-sm text-on-primary-container uppercase">System
+                            Architecture v4.0</span>
+                    </div>
+                    <h1 class="font-headline-lg text-primary text-headline-lg text-on-surface mb-md">Precision Performance</h1>
+                    <p class="font-body-lg text-body-lg text-white text-on-surface-variant max-w-sm">
+                        Engineered for the data-intensive professional. Access the infrastructure designed for
+                        engineering, finance, and software mastery.
+                    </p>
+                </div>
+                <div class="flex gap-lg">
+                    <div class="flex flex-col">
+                        <span class="font-label-md text-label-md text-primary font-bold">99.9%</span>
+                        <span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Uptime Ratio</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-label-md text-label-md text-primary font-bold">&lt; 2ms</span>
+                        <span class="font-label-sm text-label-sm text-on-surface-variant uppercase">I/O Latency</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="w-full md:w-1/2 lg:w-2/5 flex items-center justify-center p-gutter md:p-xl bg-surface">
+            <div class="w-full max-w-[440px]">
+                <div class="md:hidden mb-xl flex flex-col items-center">
+                    <span
+                        class="font-headline-md text-headline-md font-bold text-primary uppercase tracking-tighter">Precision
+                        PC</span>
+                </div>
+                <div class="mb-xl">
+                    <h2 class="font-headline-md text-headline-md text-on-surface mb-xs">Initialize System Access</h2>
+                    <p class="font-body-md text-body-md text-on-surface-variant">Create your precision account to start
+                        building.</p>
+                </div>
+                <form class="space-y-lg">
+                    <!-- Name Field -->
+                    <div class="space-y-xs">
+                        <label class="font-label-md text-label-md text-on-surface-variant uppercase" for="name">First Name</label>
+                        <div class="relative">
+                            <input
+                                class="w-full h-12 px-md bg-surface-bright border border-outline-variant text-on-surface font-label-md focus:outline-none focus:border-primary-container retro-orange-glow transition-all rounded-lg"
+                                id="name" name="first-name" placeholder="ALAN" type="text" />
+                        </div>
+                    </div>
+                    <div class="space-y-xs">
+                        <label class="font-label-md text-label-md text-on-surface-variant uppercase" for="name">Last Name</label>
+                        <div class="relative">
+                            <input
+                                class="w-full h-12 px-md bg-surface-bright border border-outline-variant text-on-surface font-label-md focus:outline-none focus:border-primary-container retro-orange-glow transition-all rounded-lg"
+                                id="name" placeholder="TURING" type="text"
+                                name="last-name"
+                                />
+                        </div>
+                    </div>
+                    <!-- Work Email Field -->
+                    <div class="space-y-xs">
+                        <label class="font-label-md text-label-md text-on-surface-variant uppercase" for="email">
+                            Email</label>
+                        <div class="relative">
+                            <input
+                                class="w-full h-12 px-md bg-surface-bright border border-outline-variant text-on-surface font-label-md focus:outline-none focus:border-primary-container retro-orange-glow transition-all rounded-lg"
+                                id="email" name="email" placeholder="ARCHITECTURE@SYSTEM.COM" type="email" />
+                        </div>
+                    </div>
+                    <!-- Password Field -->
+                    <div class="space-y-xs">
+                        <div class="flex justify-between">
+                            <label class="font-label-md text-label-md text-on-surface-variant uppercase"
+                                for="password">Password</label>
+                            <span class="font-label-sm text-label-sm text-tertiary">MIN 8 CHARS</span>
+                        </div>
+                        <div class="relative">
+                            <input
+                                class="w-full h-12 px-md bg-surface-bright border border-outline-variant text-on-surface font-label-md focus:outline-none focus:border-primary-container retro-orange-glow transition-all rounded-lg"
+                                id="password" name="password" placeholder="••••••••••••" type="password" />
+                            <button
+                                class="absolute right-md top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary"
+                                type="button">
+                                <span class="material-symbols-outlined text-[20px]">visibility</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="space-y-xs">
+                        <div class="flex justify-between">
+                            <label class="font-label-md text-label-md text-on-surface-variant uppercase"
+                                for="password">Confirm Password</label>
+                            <span class="font-label-sm text-label-sm text-tertiary">MIN 8 CHARS</span>
+                        </div>
+                        <div class="relative">
+                            <input
+                                class="w-full h-12 px-md bg-surface-bright border border-outline-variant text-on-surface font-label-md focus:outline-none focus:border-primary-container retro-orange-glow transition-all rounded-lg"
+                                id="confirm-password" name="confirm-password" placeholder="••••••••••••" type="password" />
+                            <button
+                                class="absolute right-md top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary"
+                                id="toggle-confirm-password"
+                                type="button">
+                                
+                                <span class="material-symbols-outlined text-[20px]">visibility</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Terms Checkbox -->
+                    <!-- <div class="flex items-start gap-sm">
+                        <input
+                            class="mt-1 w-4 h-4 rounded-sm border-outline-variant text-primary-container focus:ring-primary-container"
+                            id="terms" type="checkbox" />
+                        <label class="font-body-md text-body-md text-on-surface-variant" for="terms">
+                            I accept the <a class="text-primary hover:underline underline-offset-4" href="#">Technical
+                                Terms of Service</a> and Data Governance Policy.
+                        </label>
+                    </div> -->
+                    <!-- Primary Action -->
+                    <div class="pt-sm">
+                        <button
+                            class="w-full h-12 bg-primary-container text-on-primary font-label-md uppercase tracking-widest rounded-lg hover:bg-primary transition-all active:scale-[0.98] flex items-center justify-center gap-sm"
+                            type="submit">
+                            Create New Account
+                            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                        </button>
+                    </div>
+                </form>
+                <!-- Footer Links -->
+                <div class="mt-xl pt-lg border-t border-surface-container flex flex-col items-center gap-md">
+                    <p class="font-body-md text-body-md text-on-surface-variant">
+                        Already have access?
+                        <a class="text-primary font-bold hover:underline underline-offset-4 ml-xs transition-all"
+                            href="#">Sign in instead</a>
+                    </p>
+                   
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Subtle atmospheric effect: Light Technical Grid Overlay (Only desktop) -->
+    <div class="fixed inset-0 pointer-events-none opacity-[0.03] z-[100] hidden md:block"
+        style="background-image: radial-gradient(#ab3600 0.5px, transparent 0.5px); background-size: 24px 24px;"></div>
+    <script>
+        // Simple micro-interaction for password visibility
+        const toggleBtn = document.querySelector('button .material-symbols-outlined');
+        const toggleConfirmPassword = document.querySelector('#toggle-confirm-password');
+        const passInput = document.getElementById('password');
+        const confirmPassInput = document.getElementById('confirm-password');
+
+        if (toggleBtn && passInput) {
+            toggleBtn.parentElement.addEventListener('click', () => {
+                const isPass = passInput.type === 'password';
+                passInput.type = isPass ? 'text' : 'password';
+                toggleBtn.textContent = isPass ? 'visibility_off' : 'visibility';
+            });
+        }
+
+        if (toggleConfirmPassword && confirmPassInput) {
+            toggleConfirmPassword.parentElement.addEventListener('click', () => {
+                const isPass = confirmPassInput.type === 'password';
+                confirmPassInput.type = isPass ? 'text' : 'password';
+                confirmPassInput.textContent = isPass ? 'visibility_off' : 'visibility';
+            });
+        }
+
+    </script>
+</body>
+
+{% endblock %}
+
+</html>
