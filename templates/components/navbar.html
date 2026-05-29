@@ -26,11 +26,19 @@
                 class="pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-lg focus:outline-none focus:border-primary-container w-64 transition-all"
                 placeholder="Search components..." type="text" />
         </div>
-        <button
-            class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-all active:scale-95"
-            data-icon="shopping_cart">shopping_cart</button>
-        <button
-            class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-all active:scale-95"
-            data-icon="account_circle">account_circle</button>
+    {% if  user.is_authenticated %}
+    <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-all ">shopping_cart</button>
+    <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-all ">account_circle</button>
+{% else %}
+<a href="{% url 'signIn' %}"
+       class="px-4 py-2 rounded hover:bg-white hover:text-on-surface hover:border hover:border-outline bg-primary-container text-white  text-sm font-medium  transition-colors ">
+        Sign In
+    </a>
+    <a href="{% url 'register' %}"
+       class="px-4 py-2 rounded border border-outline hover:border-none text-on-surface text-sm hover:bg-primary-container font-medium hover:text-white transition-colors ">
+        Register
+    </a>
+    
+    {% endif %}
     </div>
 </nav>

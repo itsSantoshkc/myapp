@@ -1,0 +1,140 @@
+{% extends 'components/header.html' %}
+{% block title %}Sign In - Precision PC{% endblock %}
+{% block layout %}
+
+<body class="bg-background text-on-background min-h-screen flex flex-col">
+    <main class="flex-grow flex flex-col md:flex-row min-h-screen">
+        <section
+            class="hidden md:flex md:w-1/2 relative overflow-hidden bg-on-surface text-surface-container-lowest p-xl items-end">
+            <div class="absolute inset-0 z-0">
+                <img alt="Precision PC Technical Hero"
+                    class="w-full h-full object-cover opacity-60 mix-blend-luminosity"
+                    data-alt="A highly detailed close-up shot of a high-performance computer motherboard with glowing orange light tracing the circuitry paths. The lighting is cold and clinical, creating a professional technical atmosphere. The composition uses deep shadows and sharp focus on intricate metallic components, embodying a surgical precision aesthetic with vibrant Retro Orange accents popping against a slate-grey background."
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5vbf2HYEjQwXIJi8SzE0PiZUVk-VWyNYWlJWMc4VWHTUchTV863PDr19a16VXDl9H1jVJ1G4TSALmJzDsoBeEqFhcchceBkQWQ8malqUqqq6vxvCfdf__67eDM9ndFN9KtMi3GqQhwfqBdiCBWXImiEc95iz_mUfrWEX1gJHskSOWV_HGFXu9jOFScNjkEVxLWgO7yQ_QYy_QCff-ou3qt0SvTqwQkjbFOaZxzG8MENbr4sqJr1pZZUy_tR3EB2lf8W9LmU3eqOQ" />
+                <div class="absolute inset-0 bg-gradient-to-t from-on-surface via-on-surface/40 to-transparent"></div>
+            </div>
+            <div class="relative z-10 max-w-lg">
+                <div class="mb-lg">
+                    <span
+                        class="font-label-md text-label-md bg-primary-container text-on-primary-container px-sm py-xs uppercase tracking-widest rounded-sm">
+                        Enterprise Utility
+                    </span>
+                </div>
+                <h1 class="font-headline-lg text-headline-lg mb-md leading-tight">
+                    Engineered for surgical precision and uncompromising speed.
+                </h1>
+                <p class="font-body-lg text-body-lg opacity-80 mb-xl max-w-md">
+                    Access the industry-leading platform for high-density compute management and real-time technical
+                    workflows.
+                </p>
+                <div class="grid grid-cols-2 gap-md border-t border-outline-variant/20 pt-lg">
+                    <div>
+                        <p class="font-label-md text-label-md uppercase opacity-50 mb-xs">Uptime</p>
+                        <p class="font-headline-md text-headline-md font-bold">99.99%</p>
+                    </div>
+                    <div>
+                        <p class="font-label-md text-label-md uppercase opacity-50 mb-xs">Latencies</p>
+                        <p class="font-headline-md text-headline-md font-bold">&lt;1ms</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Absolute positioned brand logo -->
+            <div class="absolute top-xl left-xl">
+                <span
+                    class="font-headline-md text-headline-md font-bold uppercase tracking-tighter text-primary-container">
+                    Precision PC
+                </span>
+            </div>
+        </section>
+        <!-- Right Side: Login Panel -->
+        <section class="w-full md:w-1/2 flex items-center justify-center p-md lg:p-xl bg-surface-container-lowest">
+            <div class="w-full max-w-md">
+                <!-- Mobile Logo (Hidden on Desktop) -->
+                <div class="md:hidden mb-xl">
+                    <span class="font-headline-md text-headline-md font-bold uppercase tracking-tighter text-primary">
+                        Precision PC
+                    </span>
+                </div>
+                <div class="mb-xl">
+                    <h2 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Authenticate</h2>
+                    <p class="font-body-md text-body-md text-on-surface-variant">Enter your credentials to access the
+                        terminal.</p>
+                </div>
+                <form class="space-y-lg" action="{% url 'signIn' %}" method="post">
+                    {% csrf_token %}
+                    <div class="space-y-sm">
+                        <label class="font-label-md uppercase text-label-md text-on-surface-variant uppercase tracking-widest"
+                            for="email"
+                            name="email"
+                            >
+                            Email Address
+                        </label>
+                        <div class="relative group">
+                            <span
+                                class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors">
+                                alternate_email
+                            </span>
+                            <input
+                                class="w-full pl-[48px] pr-md uppercase py-md bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md focus:outline-none focus:border-primary-container focus:ring-0 retro-orange-glow transition-all"
+                                id="email" placeholder="name@precision-pc.com" type="email" />
+                        </div>
+                    </div>
+                    <div class="space-y-sm">
+                        <div class="flex justify-between items-center">
+                            <label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest"
+                                for="password"
+                                
+                                >
+                                Password
+                            </label>
+                            <a class="font-label-md text-label-md uppercase text-primary hover:underline decoration-2 underline-offset-4"
+                                href="#">
+                                Forgot Access?
+                            </a>
+                        </div>
+                        <div class="relative group">
+                            <span
+                                class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors">
+                                lock
+                            </span>
+                            <input
+                                class="w-full uppercase text-on-surface pl-[48px] pr-md py-md bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md focus:outline-none focus:border-primary-container focus:ring-0 retro-orange-glow transition-all"
+                                id="password" placeholder="••••••••••••" type="password" 
+                                name="password"
+                                />
+                        </div>
+                    </div>
+
+                    <button
+                        class="w-full py-md bg-primary-container text-on-primary text-body-lg font-bold rounded-lg shadow-sm hover:bg-primary transition-all active:scale-[0.98] flex items-center justify-center space-x-sm"
+                        type="submit">
+                        <span>Authenticate</span>
+                        <span class="material-symbols-outlined">login</span>
+                    </button>
+                </form>
+                <div class="mt-xl pt-lg border-t border-surface-container-highest">
+                    <p class="font-body-md text-body-md text-on-surface-variant text-center">
+                        New User? <a class="text-primary font-bold hover:underline decoration-2 underline-offset-4"
+                            href="{% url 'register' %}">Register Yourself</a>
+                    </p>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Micro-interaction for input focus effects
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.parentElement.querySelector('label').classList.add('text-primary');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.parentElement.querySelector('label').classList.remove('text-primary');
+            });
+        });
+
+       
+    </script>
+</body>
+{% endblock %}

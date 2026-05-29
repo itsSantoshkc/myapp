@@ -57,14 +57,15 @@
                     <p class="font-body-md text-body-md text-on-surface-variant">Create your precision account to start
                         building.</p>
                 </div>
-                <form class="space-y-lg">
+                <form class="space-y-lg" action="{% url 'register' %}" method="post">
+                    {% csrf_token %}
                     <!-- Name Field -->
                     <div class="space-y-xs">
                         <label class="font-label-md text-label-md text-on-surface-variant uppercase" for="name">First Name</label>
                         <div class="relative">
                             <input
                                 class="w-full h-12 px-md bg-surface-bright border border-outline-variant text-on-surface font-label-md focus:outline-none focus:border-primary-container retro-orange-glow transition-all rounded-lg"
-                                id="name" name="first-name" placeholder="ALAN" type="text" />
+                                id="name" name="first_name" placeholder="ALAN" type="text" />
                         </div>
                     </div>
                     <div class="space-y-xs">
@@ -73,7 +74,7 @@
                             <input
                                 class="w-full h-12 px-md bg-surface-bright border border-outline-variant text-on-surface font-label-md focus:outline-none focus:border-primary-container retro-orange-glow transition-all rounded-lg"
                                 id="name" placeholder="TURING" type="text"
-                                name="last-name"
+                                name="last_name"
                                 />
                         </div>
                     </div>
@@ -114,7 +115,7 @@
                         <div class="relative">
                             <input
                                 class="w-full h-12 px-md bg-surface-bright border border-outline-variant text-on-surface font-label-md focus:outline-none focus:border-primary-container retro-orange-glow transition-all rounded-lg"
-                                id="confirm-password" name="confirm-password" placeholder="••••••••••••" type="password" />
+                                id="confirm_password" name="confirm_password" placeholder="••••••••••••" type="password" />
                             <button
                                 class="absolute right-md top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary"
                                 id="toggle-confirm-password"
@@ -149,42 +150,35 @@
                     <p class="font-body-md text-body-md text-on-surface-variant">
                         Already have access?
                         <a class="text-primary font-bold hover:underline underline-offset-4 ml-xs transition-all"
-                            href="#">Sign in instead</a>
+                            href="{% url 'signIn' %}">Sign in instead</a>
                     </p>
                    
                 </div>
             </div>
         </section>
     </main>
-    <!-- Subtle atmospheric effect: Light Technical Grid Overlay (Only desktop) -->
     <div class="fixed inset-0 pointer-events-none opacity-[0.03] z-[100] hidden md:block"
         style="background-image: radial-gradient(#ab3600 0.5px, transparent 0.5px); background-size: 24px 24px;"></div>
     <script>
-        // Simple micro-interaction for password visibility
-        const toggleBtn = document.querySelector('button .material-symbols-outlined');
-        const toggleConfirmPassword = document.querySelector('#toggle-confirm-password');
-        const passInput = document.getElementById('password');
-        const confirmPassInput = document.getElementById('confirm-password');
+    function setupToggle(buttonSelector, inputId) {
+        const button = document.querySelector(buttonSelector);
+        const input = document.getElementById(inputId);
+        const icon = button.querySelector('.material-symbols-outlined');
 
-        if (toggleBtn && passInput) {
-            toggleBtn.parentElement.addEventListener('click', () => {
-                const isPass = passInput.type === 'password';
-                passInput.type = isPass ? 'text' : 'password';
-                toggleBtn.textContent = isPass ? 'visibility_off' : 'visibility';
+        if (button && input && icon) {
+            button.addEventListener('click', () => {
+                const isPassword = input.type === 'password';
+                input.type = isPassword ? 'text' : 'password';
+                // Toggle the icon text
+                icon.textContent = isPassword ? 'visibility_off' : 'visibility';
             });
         }
+    }
 
-        if (toggleConfirmPassword && confirmPassInput) {
-            toggleConfirmPassword.parentElement.addEventListener('click', () => {
-                const isPass = confirmPassInput.type === 'password';
-                confirmPassInput.type = isPass ? 'text' : 'password';
-                confirmPassInput.textContent = isPass ? 'visibility_off' : 'visibility';
-            });
-        }
+    setupToggle('#password + button', 'password'); 
+    setupToggle('#toggle-confirm-password', 'confirm_password');
 
     </script>
 </body>
 
 {% endblock %}
-
-</html>
