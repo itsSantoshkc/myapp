@@ -119,6 +119,9 @@
                 </div>
                 <form class="space-y-lg" method="POST" action="{% url 'add_to_cart' %}">
                     {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}" />
+                    <input type="hidden" name="group_labels"
+                        value="{% for group in variant_groups %}{{ group.label }}{% if not forloop.last %},{% endif %}{% endfor %}" />
 
                     <div class="space-y-xs">
                         <label class="font-label-md text-label-md text-on-surface-variant uppercase">
@@ -129,6 +132,7 @@
                                 class="w-full h-12 px-md bg-surface-bright border border-outline-variant text-on-surface font-label-md focus:outline-none focus:border-primary-container retro-orange-glow transition-all rounded-lg" />
                         </div>
                     </div>
+
                     <div class="space-y-md">
                         {% for group in variant_groups %}
                         <div class="space-y-xs">
@@ -138,17 +142,19 @@
                             <div class="flex gap-sm flex-wrap">
                                 {% for variant in group.variants %}
                                 <label class="cursor-pointer">
+                                    <!-- only change: name="{{ group.label }}", type="radio" -->
                                     <input type="radio" name="{{ group.label }}" value="{{ variant.id }}"
                                         class="hidden peer" {% if forloop.first %}checked{% endif %} />
 
                                     {% if group.label == "color" %}
                                     <span class="w-10 h-10 rounded-full block border-2 border-transparent
-                         peer-checked:border-primary transition-all" style="background-color: '{{ variant.value }}'">
+                                 peer-checked:border-primary transition-all"
+                                        style="background-color: {{ variant.value }}">
                                     </span>
                                     {% else %}
                                     <span class="px-md py-xs border border-outline-variant text-on-surface-variant
-                         rounded-lg font-label-md peer-checked:border-primary
-                         peer-checked:text-primary transition-all block">
+                                 rounded-lg font-label-md peer-checked:border-primary
+                                 peer-checked:text-primary transition-all block">
                                         {{ variant.value }}
                                     </span>
                                     {% endif %}
@@ -157,9 +163,6 @@
                             </div>
                         </div>
                         {% endfor %}
-
-
-
                     </div>
 
                     <div class="flex flex-col gap-sm">

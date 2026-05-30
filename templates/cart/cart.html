@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Geist:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+
+        body {
+            font-family: 'Geist', sans-serif;
+            background-color: #f7f9fb;
+        }
+
+        .mono-text {
+            font-family: 'JetBrains Mono', monospace;
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#d8dadc",
+                        "on-tertiary": "#ffffff",
+                        "inverse-primary": "#ffb59c",
+                        "tertiary": "#505f76",
+                        "on-secondary-fixed": "#131b2e",
+                        "surface-tint": "#ab3600",
+                        "surface-container-low": "#f2f4f6",
+                        "tertiary-fixed-dim": "#b7c8e1",
+                        "on-background": "#191c1e",
+                        "surface-bright": "#f7f9fb",
+                        "primary": "#ab3600",
+                        "on-tertiary-container": "#1d2e42",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#e6e8ea",
+                        "secondary": "#565e74",
+                        "primary-fixed": "#ffdbcf",
+                        "on-primary-fixed": "#390c00",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#561700",
+                        "secondary-fixed": "#dae2fd",
+                        "background": "#f7f9fb",
+                        "inverse-surface": "#2d3133",
+                        "surface-container": "#eceef0",
+                        "primary-fixed-dim": "#ffb59c",
+                        "primary-container": "#ff5f1f",
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#dae2fd",
+                        "on-surface-variant": "#5b4138",
+                        "on-surface": "#191c1e",
+                        "on-secondary-container": "#5c647a",
+                        "outline-variant": "#e3bfb3",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "secondary-fixed-dim": "#bec6e0",
+                        "on-secondary-fixed-variant": "#3f465c",
+                        "tertiary-container": "#8595ad",
+                        "on-primary-fixed-variant": "#832700",
+                        "surface-variant": "#e0e3e5",
+                        "on-tertiary-fixed": "#0b1c30",
+                        "error": "#ba1a1a",
+                        "surface": "#f7f9fb",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#d3e4fe",
+                        "surface-container-highest": "#e0e3e5",
+                        "outline": "#8f7066",
+                        "on-tertiary-fixed-variant": "#38485d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "xl": "40px",
+                        "lg": "24px",
+                        "margin-desktop": "32px",
+                        "md": "16px",
+                        "sm": "8px",
+                        "base": "4px",
+                        "margin-mobile": "16px",
+                        "xs": "4px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["JetBrains Mono"],
+                        "label-md": ["JetBrains Mono"],
+                        "headline-md": ["Geist"],
+                        "body-lg": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "headline-lg-mobile": ["Geist"],
+                        "body-md": ["Geist"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-surface text-on-surface">
+    <!-- TopNavBar -->
+    <nav
+        class="w-full top-0 sticky z-50 bg-surface-container-lowest dark:bg-surface-container-lowest border-b border-surface-container dark:border-outline-variant">
+        <div class="flex justify-between items-center px-lg py-md max-w-[1440px] mx-auto">
+            <div class="flex items-center gap-lg">
+                <span
+                    class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-container uppercase tracking-tighter">Precision
+                    PC</span>
+                <div class="hidden md:flex items-center gap-md">
+                    <a class="font-body-md text-body-md font-medium tracking-tight text-on-surface-variant hover:text-primary transition-colors"
+                        href="#">Processors</a>
+                    <a class="font-body-md text-body-md font-medium tracking-tight text-on-surface-variant hover:text-primary transition-colors"
+                        href="#">GPUs</a>
+                    <a class="font-body-md text-body-md font-medium tracking-tight text-on-surface-variant hover:text-primary transition-colors"
+                        href="#">Storage</a>
+                    <a class="font-body-md text-body-md font-medium tracking-tight text-on-surface-variant hover:text-primary transition-colors"
+                        href="#">Memory</a>
+                    <a class="font-body-md text-body-md font-medium tracking-tight text-on-surface-variant hover:text-primary transition-colors"
+                        href="#">Motherboards</a>
+                    <a class="font-body-md text-body-md font-medium tracking-tight text-on-surface-variant hover:text-primary transition-colors"
+                        href="#">Cooling</a>
+                </div>
+            </div>
+            <div class="flex items-center gap-md">
+                <button
+                    class="p-sm text-on-surface-variant hover:bg-surface-container-low transition-all duration-200 active:scale-95">
+                    <span class="material-symbols-outlined" data-icon="search">search</span>
+                </button>
+                <button
+                    class="p-sm text-primary transition-all duration-200 active:scale-95 border-b-2 border-primary pb-1">
+                    <span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+                </button>
+                <button
+                    class="p-sm text-on-surface-variant hover:bg-surface-container-low transition-all duration-200 active:scale-95">
+                    <span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Content -->
+    <main class="max-w-[1440px] mx-auto px-margin-desktop py-xl">
+        <header class="mb-lg">
+            <h1 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Cart</h1>
+            <p class="font-body-md text-body-md text-on-surface-variant">Reviewing {{ items|length }} item{{ items|length|pluralize }} for deployment.</p>
+        </header>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-lg items-start">
+            <!-- Items Column -->
+            <div class="lg:col-span-8 space-y-md">
+                <!-- Cart Item: GPU -->
+                {% for item in items %}
+                <div
+                    class="bg-surface-container-lowest border border-surface-container rounded-lg p-md flex flex-col md:flex-row gap-md items-start group">
+                    <div
+                        class="w-full md:w-32 h-32 bg-surface-container-low rounded flex items-center justify-center overflow-hidden">
+                        <img class="object-contain w-full h-full mix-blend-multiply opacity-90 group-hover:scale-105 transition-transform duration-500"
+                            data-alt="A high-end modern graphics card with triple fans and metallic finish, placed on a dark carbon fiber surface. The lighting is cold blue and sterile white, emphasizing the technical precision of the hardware. The atmosphere is professional and high-performance, fitting a corporate engineering workstation aesthetic."
+                            src="{{ item.image.url}}" />
+                    </div>
+                    <div class="flex-1 space-y-sm">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span
+                                    class="font-label-sm text-label-sm text-primary uppercase tracking-widest mb-base block">
+                                    {{item.product.category }}</span>
+                                <h3 class="font-headline-md text-headline-md text-on-surface">{{ item.product.name }}
+                                </h3>
+                            </div>
+                            <span class="font-label-md text-label-md font-bold text-on-surface">Nrs. {{ item.product.base_price }} each</span>
+                        </div>
+                       <div class="grid grid-cols-2 md:grid-cols-3 gap-sm">
+    {% for variant in item.variants %}
+    <div class="bg-surface-container p-sm rounded border border-surface-container-highest">
+        <span class="font-label-sm text-label-sm text-on-surface-variant block uppercase">
+            {{ variant.type }}
+        </span>
+        {% if variant.type == "color" %}
+    <span class="inline-block w-6 h-6 rounded border border-outline"
+          style="background-color: {{ variant.value }}">
+    </span>
+    {% else %}
+    <span class="font-label-md text-label-md text-on-surface">
+        {{ variant.value }}
+    </span>
+    {% endif %}
+    </div>
+    {% endfor %}
+</div>
+                        <div class="flex items-center justify-between pt-sm">
+                            <div
+                                class="flex items-center gap-sm bg-surface-container rounded p-xs border border-surface-container-highest">
+                                <button
+                                    class="w-8 h-8 flex items-center justify-center hover:bg-surface-container-high rounded transition-colors"><span
+                                        class="material-symbols-outlined text-[18px]"
+                                        data-icon="remove">remove</span></button>
+                                <span class="font-label-md text-label-md w-8 text-center">{{ item.item.quantity }}</span>
+                                <button
+                                    class="w-8 h-8 flex items-center justify-center hover:bg-surface-container-high rounded transition-colors"><span
+                                        class="material-symbols-outlined text-[18px]"
+                                        data-icon="add">add</span></button>
+                            </div>
+                            <button
+                                class="text-on-surface-variant hover:text-error flex items-center gap-xs transition-colors">
+                                <span class="material-symbols-outlined text-[18px]" data-icon="delete">delete</span>
+                                <span class="font-label-md text-label-md">REMOVE</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <p class="text-on-surface-variant text-center py-xl">Your cart is empty.</p>
+                {% endfor %}
+            </div>
+            <!-- Summary Column -->
+            <div class="lg:col-span-4 sticky top-24">
+                <div
+                    class="bg-surface-container-lowest border-t-4 border-primary rounded-lg p-lg border-x border-b border-surface-container space-y-md shadow-sm">
+                    <h2 class="font-headline-md text-headline-md text-on-surface">Configuration Summary</h2>
+                    <div class="space-y-sm">
+                        <div class="flex justify-between items-center py-sm border-b border-surface-container-highest">
+                            <span class="font-body-md text-body-md text-on-surface-variant">Subtotal (4 items)</span>
+                            <span class="font-label-md text-label-md font-bold text-on-surface">$ {{total}}</span>
+                        </div>
+                        <div class="flex justify-between items-center py-sm border-b border-surface-container-highest">
+                            <span class="font-body-md text-body-md text-on-surface-variant">Tax (Calculated at
+                                checkout)</span>
+                            <span class="font-label-md text-label-md text-on-surface">$0.00</span>
+                        </div>
+                        <div class="flex justify-between items-center py-sm border-b border-surface-container-highest">
+                            <span class="font-body-md text-body-md text-on-surface-variant">Shipping (Technical
+                                Freight)</span>
+                            <span class="font-label-md text-label-md text-primary font-bold">FREE</span>
+                        </div>
+                        <div class="flex justify-between items-center pt-md">
+                            <span class="font-headline-md text-headline-md text-on-surface">Estimated Total</span>
+                            <span class="font-headline-md text-headline-md text-on-surface font-bold">${{total}}</span>
+                        </div>
+                    </div>
+                    <div class="pt-md space-y-sm">
+                        <button
+                            class="w-full bg-primary-container text-white py-md rounded-lg font-headline-md text-headline-md transition-all duration-200 hover:bg-[#E54E14] active:scale-[0.98] shadow-lg shadow-primary-container/20">
+                            Proceed to Checkout
+                        </button>
+                        <button
+                            class="w-full bg-surface-container text-on-surface-variant py-md rounded-lg font-label-md text-label-md uppercase tracking-widest hover:bg-surface-container-high transition-colors">
+                            Continue Shopping
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+    </main>
+
+    <script>
+        // Micro-interactions for quantity buttons
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                const icon = this.querySelector('.material-symbols-outlined');
+                if (icon && (icon.innerText === 'add' || icon.innerText === 'remove')) {
+                    const span = this.parentElement.querySelector('span:not(.material-symbols-outlined)');
+                    let val = parseInt(span.innerText);
+                    if (icon.innerText === 'add') val++;
+                    if (icon.innerText === 'remove' && val > 1) val--;
+                    span.innerText = val;
+
+                    // Trigger a small visual pop
+                    span.style.transform = 'scale(1.1)';
+                    setTimeout(() => span.style.transform = 'scale(1)', 100);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
