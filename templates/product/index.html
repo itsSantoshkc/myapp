@@ -25,14 +25,14 @@
                         data-heavy workflows, AI research, and professional-grade computing.
                     </p>
                     <div class="flex gap-md">
-                        <button
+                        <a href="{% url 'searchProduct' %}"
                             class="bg-primary-container text-white px-lg py-md rounded font-body-md font-bold hover:bg-[#E54E14] transition-all retro-glow active:scale-95">
                             SHOP ALL HARDWARE
-                        </button>
-                        <button
+                        </a>
+                        <a href="{% url 'searchProduct' %}?sort=price_desc"
                             class="border-2 border-on-surface text-on-surface px-lg py-md rounded font-body-md font-bold hover:bg-surface-container transition-all active:scale-95">
                             LATEST ARRIVALS
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -59,63 +59,24 @@
                     <p class="text-on-surface-variant font-body-md">Engineered components for specialized computing.</p>
                 </div>
                 <a class="text-primary font-label-md hover:underline decoration-2 underline-offset-4 flex items-center gap-xs"
-                    href="#">
+                    href="{% url 'searchProduct' %}">
                     VIEW ALL CATEGORIES <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
                 </a>
             </div>
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-md">
-                <!-- Processor -->
-                <div
+                {% for cat in categories %}
+                <a href="{% url 'searchProduct' %}?c={{ cat.slug }}"
                     class="group bg-white border border-outline-variant p-lg rounded-lg hover:border-primary-container transition-all cursor-pointer">
                     <div
                         class="bg-surface-container w-12 h-12 flex items-center justify-center rounded-lg mb-md group-hover:bg-primary-fixed transition-colors">
                         <span
-                            class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">memory</span>
+                            class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">{% for key, meta in category_meta.items %}{% if key == cat.slug %}{{ meta.icon }}{% endif %}{% endfor %}</span>
                     </div>
-                    <h3 class="font-headline-md text-[20px] mb-xs">Processors</h3>
-                    <p class="font-body-md text-on-surface-variant text-sm mb-md">Multi-core architectures for heavy
-                        parallel processing.</p>
-                    <span class="font-label-sm text-label-sm text-primary uppercase">124 Items Available</span>
-                </div>
-                <!-- GPU -->
-                <div
-                    class="group bg-white border border-outline-variant p-lg rounded-lg hover:border-primary-container transition-all cursor-pointer">
-                    <div
-                        class="bg-surface-container w-12 h-12 flex items-center justify-center rounded-lg mb-md group-hover:bg-primary-fixed transition-colors">
-                        <span
-                            class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">developer_board</span>
-                    </div>
-                    <h3 class="font-headline-md text-[20px] mb-xs">Graphics Cards</h3>
-                    <p class="font-body-md text-on-surface-variant text-sm mb-md">CUDA-enabled rendering and AI
-                        acceleration engines.</p>
-                    <span class="font-label-sm text-label-sm text-primary uppercase">86 Items Available</span>
-                </div>
-                <!-- Storage -->
-                <div
-                    class="group bg-white border border-outline-variant p-lg rounded-lg hover:border-primary-container transition-all cursor-pointer">
-                    <div
-                        class="bg-surface-container w-12 h-12 flex items-center justify-center rounded-lg mb-md group-hover:bg-primary-fixed transition-colors">
-                        <span
-                            class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">database</span>
-                    </div>
-                    <h3 class="font-headline-md text-[20px] mb-xs">High-Speed Storage</h3>
-                    <p class="font-body-md text-on-surface-variant text-sm mb-md">NVMe Gen5 drives with sustained 12GB/s
-                        throughput.</p>
-                    <span class="font-label-sm text-label-sm text-primary uppercase">210 Items Available</span>
-                </div>
-                <!-- Motherboard -->
-                <div
-                    class="group bg-white border border-outline-variant p-lg rounded-lg hover:border-primary-container transition-all cursor-pointer">
-                    <div
-                        class="bg-surface-container w-12 h-12 flex items-center justify-center rounded-lg mb-md group-hover:bg-primary-fixed transition-colors">
-                        <span
-                            class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">settings_input_component</span>
-                    </div>
-                    <h3 class="font-headline-md text-[20px] mb-xs">Motherboards</h3>
-                    <p class="font-body-md text-on-surface-variant text-sm mb-md">Server-grade PCB design for thermal
-                        stability.</p>
-                    <span class="font-label-sm text-label-sm text-primary uppercase">58 Items Available</span>
-                </div>
+                    <h3 class="font-headline-md text-[20px] mb-xs">{{ cat.name }}</h3>
+                    <p class="font-body-md text-on-surface-variant text-sm mb-md">{% for key, meta in category_meta.items %}{% if key == cat.slug %}{{ meta.desc }}{% endif %}{% endfor %}</p>
+                    <span class="font-label-sm text-label-sm text-primary uppercase">{{ cat.product_count }} Item{{ cat.product_count|pluralize }} Available</span>
+                </a>
+                {% endfor %}
             </div>
         </section>
         <!-- Precision Selects - Bento Grid Layout -->
@@ -123,61 +84,52 @@
             <div class="max-w-[1440px] mx-auto px-margin-desktop">
                 <div class="mb-lg">
                     <h2 class="font-headline-md text-headline-md">Featured Products</h2>
-                    <p class="text-on-surface-variant font-body-md">Hardware hand-picked for stability and maximum
-                        output.</p>
+                    <p class="text-on-surface-variant font-body-md">Hardware hand-picked for stability and maximum output.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-12 grid-rows-2 gap-md h-auto md:h-[600px]">
-                    <!-- Main Feature: RTX 4090 -->
-                    <div
+                    {% if main_featured %}
+                    <!-- Main Feature -->
+                    <a href="{% url 'productDetails' main_featured.id %}"
                         class="md:col-span-8 md:row-span-2 bg-white border border-outline-variant rounded-lg overflow-hidden flex flex-col relative group">
                         <div class="p-lg relative z-10 bg-gradient-to-b from-white to-transparent">
                             <span
                                 class="inline-block bg-primary-container text-white text-[10px] px-2 py-1 rounded font-bold uppercase tracking-widest mb-md">FLAGSHIP
                                 CHOICE</span>
-                            <h3 class="font-headline-lg text-headline-lg mb-sm">NVIDIA GeForce RTX 4090</h3>
-                            <p class="font-body-md text-on-surface-variant max-w-sm mb-md">The definitive GPU for AI
-                                training and photorealistic rendering environments. 24GB G6X memory.</p>
-                            <p class="font-headline-md text-primary">$1,599.00</p>
+                            <h3 class="font-headline-lg text-headline-lg mb-sm">{{ main_featured.name }}</h3>
+                            <p class="font-body-md text-on-surface-variant max-w-sm mb-md">{{ main_featured.description|truncatewords:20 }}</p>
+                            <p class="font-headline-md text-primary">${{ main_featured.base_price }}</p>
                         </div>
                         <div class="mt-auto h-full w-full">
+                            {% with image=main_featured.images.first %}
+                            {% if image %}
                             <img class="w-full h-full object-contain p-lg transition-transform duration-700 group-hover:scale-105"
-                                data-alt="A macro studio shot of a high-end black graphics card with complex heatsink fins and metallic highlights. The lighting is focused and cinematic, reflecting off the carbon-fiber textures of the hardware. The background is a clean, neutral grey-white studio space, emphasizing technical utility and premium build quality."
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXl21AQTWHSB3p56WjKIlwbXGAI5TBv7epowsn-41dURrgZP618QTKHwZCPDlcObwU0oYx1KoKyY6okdZ1H4dnyeF_dB5aJWS9dRYClSSb11JAhSLcYWNDJw97dkGGPsMf8-dGEO2bqDQbAIwNjKuemeMy19IyxjAvzV_aCbSkZ0PkM7_RgxjQzsAIY3Ao85ZdEJ-KyexGG8uiWTJ0fva3fYDuis10QY0IDx_T7ObrGkLhSEm64SsDuLOjXfXWIzkafyzIQW0_xAs" />
+                                src="{{ image.url }}"
+                                alt="{{ main_featured.name }}" />
+                            {% endif %}
+                            {% endwith %}
                         </div>
-                        <div class="absolute bottom-lg left-lg">
-                            <button
-                                class="bg-on-surface text-white px-lg py-sm rounded-lg font-label-md hover:bg-primary-container transition-all">ADD
-                                TO CART</button>
-                        </div>
-                    </div>
-                    <!-- Secondary Feature: RAM -->
-                    <div
+                    </a>
+                    {% endif %}
+
+                    {% for product in secondary_featured %}
+                    <!-- Secondary Feature -->
+                    <a href="{% url 'productDetails' product.id %}"
                         class="md:col-span-4 bg-white border border-outline-variant rounded-lg p-lg flex flex-col justify-between group">
                         <div>
-                            <span class="font-label-sm text-label-sm text-primary uppercase">LATENCY REDUCTION</span>
-                            <h3 class="font-headline-md mt-sm">Dominator Titanium 64GB</h3>
-                            <p class="font-body-md text-on-surface-variant mt-xs">DDR5 6000MT/s CL30</p>
+                            <span class="font-label-sm text-label-sm text-primary uppercase">{{ product.category.name }}</span>
+                            <h3 class="font-headline-md mt-sm">{{ product.name|truncatewords:5 }}</h3>
+                            {% with variant=product.variants.first %}
+                            {% if variant %}
+                            <p class="font-body-md text-on-surface-variant mt-xs">{{ variant.type }}: {{ variant.value }}</p>
+                            {% endif %}
+                            {% endwith %}
                         </div>
                         <div class="flex justify-between items-end">
-                            <span class="font-headline-md">$289.00</span>
-                            <button
-                                class="material-symbols-outlined bg-surface-container-low p-2 rounded hover:bg-primary-container hover:text-white transition-all">shopping_cart</button>
+                            <span class="font-headline-md">${{ product.base_price }}</span>
+                            <span class="material-symbols-outlined bg-surface-container-low p-2 rounded hover:bg-primary-container hover:text-white transition-all">shopping_cart</span>
                         </div>
-                    </div>
-                    <!-- Secondary Feature: NVMe -->
-                    <div
-                        class="md:col-span-4 bg-white border border-outline-variant rounded-lg p-lg flex flex-col justify-between group">
-                        <div>
-                            <span class="font-label-sm text-label-sm text-primary uppercase">ULTRA-FAST TRANSFERS</span>
-                            <h3 class="font-headline-md mt-sm">Precision Pro Gen5 2TB</h3>
-                            <p class="font-body-md text-on-surface-variant mt-xs">Heatsink Included</p>
-                        </div>
-                        <div class="flex justify-between items-end">
-                            <span class="font-headline-md">$349.00</span>
-                            <button
-                                class="material-symbols-outlined bg-surface-container-low p-2 rounded hover:bg-primary-container hover:text-white transition-all">shopping_cart</button>
-                        </div>
-                    </div>
+                    </a>
+                    {% endfor %}
                 </div>
             </div>
         </section>
@@ -206,10 +158,10 @@
                             Express delivery for mission-critical hardware replacements.
                         </li>
                     </ul>
-                    <button
+                    <a href="{% url 'searchProduct' %}"
                         class="bg-primary-container text-white px-xl py-lg rounded font-body-md font-extrabold uppercase tracking-widest hover:bg-[#E54E14] transition-all self-start retro-glow">
                         BROWSE INVENTORY
-                    </button>
+                    </a>
                 </div>
                 <div class="lg:w-1/2 relative bg-[#121417]">
                     <img class="w-full h-full object-cover opacity-80"

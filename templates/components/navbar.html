@@ -6,28 +6,26 @@
             class="font-headline-md text-headline-md font-bold text-primary uppercase tracking-tighter">Precision
             PC</a>
         <div class="hidden md:flex gap-lg items-center">
-            <a class="font-body-md text-body-md font-medium tracking-tight text-primary border-b-2 border-primary pb-1"
-                href="#">Processors</a>
-            <a class="font-body-md text-body-md font-medium tracking-tight text-on-surface-variant hover:text-primary transition-colors"
-                href="#">GPUs</a>
-            <a class="font-body-md text-body-md font-medium tracking-tight text-on-surface-variant hover:text-primary transition-colors"
-                href="#">Storage</a>
-            <a class="font-body-md text-body-md font-medium tracking-tight text-on-surface-variant hover:text-primary transition-colors"
-                href="#">Memory</a>
-            <a class="font-body-md text-body-md font-medium tracking-tight text-on-surface-variant hover:text-primary transition-colors"
-                href="#">Motherboards</a>
+            <a class="font-body-md text-body-md font-medium tracking-tight {% if request.resolver_match.url_name == 'index' %}text-primary border-b-2 border-primary pb-1{% else %}text-on-surface-variant hover:text-primary transition-colors{% endif %}"
+                href="{% url 'index' %}">Home</a>
+            {% for cat in navbar_categories %}
+            <a class="font-body-md text-body-md font-medium tracking-tight {% if request.GET.c == cat.slug %}text-primary border-b-2 border-primary pb-1{% else %}text-on-surface-variant hover:text-primary transition-colors{% endif %}"
+                href="{% url 'searchProduct' %}?c={{ cat.slug }}">{{ cat.name }}</a>
+            {% endfor %}
         </div>
     </div>
     <div class="flex items-center gap-md">
-        <div class="relative hidden lg:block">
+        <form class="relative hidden lg:block" method="GET" action="{% url 'searchProduct' %}">
             <span
                 class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
             <input
+                name="s"
+                value="{{ request.GET.s|default:'' }}"
                 class="pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-lg focus:outline-none focus:border-primary-container w-64 transition-all"
                 placeholder="Search components..." type="text" />
-        </div>
+        </form>
     {% if  user.is_authenticated %}
-    <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-all ">shopping_cart</button>
+    <a href="{% url 'view_cart' %}" class="material-symbols-outlined {% if request.resolver_match.url_name == 'view_cart' %}text-primary{% else %}text-on-surface-variant{% endif %} hover:bg-surface-container-low p-2 rounded-full transition-all">shopping_cart</a>
     <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-all ">account_circle</button>
 {% else %}
 <a href="{% url 'signIn' %}"

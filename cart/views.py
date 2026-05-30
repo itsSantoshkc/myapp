@@ -67,7 +67,13 @@ def add_to_cart(request):
     return redirect(next_url)
 
 def remove_from_cart(request):
-    return
+    if request.method != 'POST':
+        return redirect('view_cart')
+    item_id = request.POST.get('item_id')
+    if item_id:
+        CartItem.objects.filter(id=item_id, cart__user=request.user).delete()
+        messages.success(request, 'Item removed from cart.')
+    return redirect('view_cart')
 
 @login_required
 def view_cart(request):
@@ -98,4 +104,24 @@ def view_cart(request):
         'cart': cart,
     })
 def update_cart(request):
-    return 
+    if request.method != 'POST':
+        return redirect('view_cart')
+    item_id = request.POST.get('item_id')
+    action = request.POST.get('action')
+    if item_id and action:
+        try:
+            item = CartItem.objects.get(id=item_id, cart__user=request.user)
+            if action == 'increase':
+                item.quantity += 1
+                item.save()
+            elif action == 'decrease':
+                if item.quantity > 1:
+                    item.quantity -= 1
+                    item.save()
+                else:
+                    item.delete()
+                    messages.success(request, 'Item removed from cart.')
+                    return redirect('view_cart')
+        except CartItem.DoesNotExist:
+            pass
+    return redirect('view_cart')

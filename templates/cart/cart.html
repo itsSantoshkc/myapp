@@ -131,22 +131,16 @@
         class="w-full top-0 sticky z-50 bg-surface-container-lowest dark:bg-surface-container-lowest border-b border-surface-container dark:border-outline-variant">
         <div class="flex justify-between items-center px-lg py-md max-w-[1440px] mx-auto">
             <div class="flex items-center gap-lg">
-                <span
+                <a href="{% url 'index' %}"
                     class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-container uppercase tracking-tighter">Precision
-                    PC</span>
+                    PC</a>
                 <div class="hidden md:flex items-center gap-md">
-                    <a class="font-body-md text-body-md font-medium tracking-tight text-on-surface-variant hover:text-primary transition-colors"
-                        href="#">Processors</a>
-                    <a class="font-body-md text-body-md font-medium tracking-tight text-on-surface-variant hover:text-primary transition-colors"
-                        href="#">GPUs</a>
-                    <a class="font-body-md text-body-md font-medium tracking-tight text-on-surface-variant hover:text-primary transition-colors"
-                        href="#">Storage</a>
-                    <a class="font-body-md text-body-md font-medium tracking-tight text-on-surface-variant hover:text-primary transition-colors"
-                        href="#">Memory</a>
-                    <a class="font-body-md text-body-md font-medium tracking-tight text-on-surface-variant hover:text-primary transition-colors"
-                        href="#">Motherboards</a>
-                    <a class="font-body-md text-body-md font-medium tracking-tight text-on-surface-variant hover:text-primary transition-colors"
-                        href="#">Cooling</a>
+                    <a class="font-body-md text-body-md font-medium tracking-tight {% if request.resolver_match.url_name == 'index' %}text-primary border-b-2 border-primary pb-1{% else %}text-on-surface-variant hover:text-primary transition-colors{% endif %}"
+                        href="{% url 'index' %}">Home</a>
+                    {% for cat in navbar_categories %}
+                    <a class="font-body-md text-body-md font-medium tracking-tight {% if request.GET.c == cat.slug %}text-primary border-b-2 border-primary pb-1{% else %}text-on-surface-variant hover:text-primary transition-colors{% endif %}"
+                        href="{% url 'searchProduct' %}?c={{ cat.slug }}">{{ cat.name }}</a>
+                    {% endfor %}
                 </div>
             </div>
             <div class="flex items-center gap-md">
@@ -154,10 +148,10 @@
                     class="p-sm text-on-surface-variant hover:bg-surface-container-low transition-all duration-200 active:scale-95">
                     <span class="material-symbols-outlined" data-icon="search">search</span>
                 </button>
-                <button
-                    class="p-sm text-primary transition-all duration-200 active:scale-95 border-b-2 border-primary pb-1">
+                <a href="{% url 'view_cart' %}"
+                    class="p-sm {% if request.resolver_match.url_name == 'view_cart' %}text-primary border-b-2 border-primary pb-1{% else %}text-on-surface-variant{% endif %} transition-all duration-200 active:scale-95">
                     <span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
-                </button>
+                </a>
                 <button
                     class="p-sm text-on-surface-variant hover:bg-surface-container-low transition-all duration-200 active:scale-95">
                     <span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
@@ -216,21 +210,35 @@
                         <div class="flex items-center justify-between pt-sm">
                             <div
                                 class="flex items-center gap-sm bg-surface-container rounded p-xs border border-surface-container-highest">
-                                <button
-                                    class="w-8 h-8 flex items-center justify-center hover:bg-surface-container-high rounded transition-colors"><span
-                                        class="material-symbols-outlined text-[18px]"
-                                        data-icon="remove">remove</span></button>
+                                <form method="POST" action="{% url 'update_cart' %}" class="inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="item_id" value="{{ item.item.id }}">
+                                    <input type="hidden" name="action" value="decrease">
+                                    <button type="submit"
+                                        class="w-8 h-8 flex items-center justify-center hover:bg-surface-container-high rounded transition-colors"><span
+                                            class="material-symbols-outlined text-[18px]"
+                                            data-icon="remove">remove</span></button>
+                                </form>
                                 <span class="font-label-md text-label-md w-8 text-center">{{ item.item.quantity }}</span>
-                                <button
-                                    class="w-8 h-8 flex items-center justify-center hover:bg-surface-container-high rounded transition-colors"><span
-                                        class="material-symbols-outlined text-[18px]"
-                                        data-icon="add">add</span></button>
+                                <form method="POST" action="{% url 'update_cart' %}" class="inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="item_id" value="{{ item.item.id }}">
+                                    <input type="hidden" name="action" value="increase">
+                                    <button type="submit"
+                                        class="w-8 h-8 flex items-center justify-center hover:bg-surface-container-high rounded transition-colors"><span
+                                            class="material-symbols-outlined text-[18px]"
+                                            data-icon="add">add</span></button>
+                                </form>
                             </div>
-                            <button
-                                class="text-on-surface-variant hover:text-error flex items-center gap-xs transition-colors">
-                                <span class="material-symbols-outlined text-[18px]" data-icon="delete">delete</span>
-                                <span class="font-label-md text-label-md">REMOVE</span>
-                            </button>
+                            <form method="POST" action="{% url 'remove_from_cart' %}" class="inline">
+                                {% csrf_token %}
+                                <input type="hidden" name="item_id" value="{{ item.item.id }}">
+                                <button type="submit"
+                                    class="text-on-surface-variant hover:text-error flex items-center gap-xs transition-colors">
+                                    <span class="material-symbols-outlined text-[18px]" data-icon="delete">delete</span>
+                                    <span class="font-label-md text-label-md">REMOVE</span>
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -279,26 +287,6 @@
         </div>
         </div>
     </main>
-
-    <script>
-        // Micro-interactions for quantity buttons
-        document.querySelectorAll('button').forEach(btn => {
-            btn.addEventListener('click', function (e) {
-                const icon = this.querySelector('.material-symbols-outlined');
-                if (icon && (icon.innerText === 'add' || icon.innerText === 'remove')) {
-                    const span = this.parentElement.querySelector('span:not(.material-symbols-outlined)');
-                    let val = parseInt(span.innerText);
-                    if (icon.innerText === 'add') val++;
-                    if (icon.innerText === 'remove' && val > 1) val--;
-                    span.innerText = val;
-
-                    // Trigger a small visual pop
-                    span.style.transform = 'scale(1.1)';
-                    setTimeout(() => span.style.transform = 'scale(1)', 100);
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>
