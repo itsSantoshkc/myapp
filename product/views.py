@@ -1,3 +1,5 @@
+from itertools import groupby
+
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
 
@@ -28,15 +30,22 @@ def productDetails(request, id):
     )
 
     breadcrumb = product.category.get_breadcrumb()
-
-    return render(
-        request,
-        "product/product_details.html",
-        {
-            "product": product,
-            "categories" : breadcrumb
+    variants = product.variants.all().order_by('type')
+    variant_groups = {
+    k: list(v) for k, v in groupby(variants, key=lambda x: x.type)
         }
-    )
+    
+    context_variant_groups = {
+    'groups': [
+        {'label': k, 'variants': v}
+        for k, v in variant_groups.items()
+    ]
+}
+    return render(request, 'product/product_details.html', {
+    'product': product,
+    'variant_groups': context_variant_groups['groups'],
+    'breadcrum' : breadcrumb
+})
 
 def searchProduct(request):
     search_query = request.GET.get("s", "").strip()
