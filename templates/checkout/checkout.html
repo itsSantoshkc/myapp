@@ -1,0 +1,296 @@
+
+{% extends 'product/template.html' %}
+{% load static %}
+{% block title %}
+Checkout - Precision PC 
+{% endblock title %}
+{% block content %}
+
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .step-active { color: #ff5f1f; border-color: #ff5f1f; }
+        input:focus { outline: none; box-shadow: 0 0 0 2px rgba(255, 95, 31, 0.2); border-color: #ff5f1f !important; }
+        .checkout-grid { display: grid; grid-template-columns: 1fr 400px; gap: 40px; }
+        @media (max-width: 1024px) { .checkout-grid { grid-template-columns: 1fr; } }
+    </style>
+
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<!-- Top Navigation (Shell Implementation) -->
+
+<!-- Main Content -->
+<main class="flex-grow max-w-[1440px] mx-auto w-full px-margin-desktop py-xl">
+<div class="checkout-grid items-start">
+<!-- Left Column: Checkout Steps -->
+<div class="flex flex-col gap-xl">
+<header class="mb-lg">
+<h1 class="font-headline-lg text-headline-lg font-semibold tracking-tight">Technical Checkout</h1>
+</header>
+<!-- Step 1: Shipping Address -->
+<section class="bg-surface-container-lowest border border-surface-container rounded-lg p-lg">
+<div class="flex items-center gap-md mb-lg">
+<span class="font-label-md text-label-md bg-primary-container text-on-primary w-6 h-6 flex items-center justify-center rounded-xs">01</span>
+<h2 class="font-headline-md text-headline-md font-medium">Shipping Architecture</h2>
+</div>
+
+{% if addresses %}
+<div class="space-y-md">
+    {% for address in addresses %}
+    <label class="flex items-start p-md border {% if forloop.first and address.is_default %}border-primary bg-surface-container-low{% else %}border-surface-container{% endif %} rounded-lg cursor-pointer hover:border-primary transition-colors address-option">
+        <input type="radio" name="address_id" value="{{ address.id }}" class="mt-1 text-primary-container focus:ring-primary-container h-4 w-4"
+            {% if forloop.first and address.is_default %}checked{% endif %} />
+        <div class="ml-md flex-grow">
+            <div class="flex items-center gap-sm">
+                <p class="font-body-md font-bold">{{ address.location }}</p>
+                {% if address.is_default %}
+                <span class="font-label-sm text-primary uppercase">Default</span>
+                {% endif %}
+            </div>
+            <p class="font-body-md text-on-surface-variant mt-1">{{ address.city }}, {{ address.state }}</p>
+            <p class="font-body-md text-on-surface-variant">{{ address.phone_number }}</p>
+        </div>
+    </label>
+    {% endfor %}
+
+    <button type="button" onclick="document.getElementById('add-address-form').classList.toggle('hidden')"
+        class="w-full border-2 border-dashed border-outline-variant text-on-surface-variant py-md rounded-lg font-label-md uppercase tracking-widest hover:border-primary hover:text-primary transition-colors flex items-center justify-center gap-sm">
+        <span class="material-symbols-outlined text-[18px]">add</span>
+        Add New Address
+    </button>
+</div>
+
+<!-- Add Address Form (Hidden by default) -->
+<div id="add-address-form" class="hidden mt-lg pt-lg border-t border-surface-container">
+    <h3 class="font-headline-md text-headline-md mb-md">New Address</h3>
+    <form method="POST" action="{% url 'add_address' %}" class="grid grid-cols-1 md:grid-cols-2 gap-md">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}">
+        <div class="flex flex-col gap-xs">
+            <label class="font-label-sm text-label-sm uppercase text-on-surface-variant tracking-wider">Phone Number</label>
+            <input type="text" name="phone_number" required
+                class="px-md py-sm border border-outline-variant rounded-lg bg-surface text-on-surface focus:outline-none focus:border-primary-container" />
+        </div>
+        <div class="flex flex-col gap-xs">
+            <label class="font-label-sm text-label-sm uppercase text-on-surface-variant tracking-wider">City</label>
+            <input type="text" name="city" required
+                class="px-md py-sm border border-outline-variant rounded-lg bg-surface text-on-surface focus:outline-none focus:border-primary-container" />
+        </div>
+        <div class="flex flex-col gap-xs">
+            <label class="font-label-sm text-label-sm uppercase text-on-surface-variant tracking-wider">State</label>
+            <input type="text" name="state" required
+                class="px-md py-sm border border-outline-variant rounded-lg bg-surface text-on-surface focus:outline-none focus:border-primary-container" />
+        </div>
+        <div class="flex flex-col gap-xs">
+            <label class="font-label-sm text-label-sm uppercase text-on-surface-variant tracking-wider">Location / Address</label>
+            <input type="text" name="location" required
+                class="px-md py-sm border border-outline-variant rounded-lg bg-surface text-on-surface focus:outline-none focus:border-primary-container" />
+        </div>
+        <div class="md:col-span-2 flex gap-md">
+            <button type="submit"
+                class="bg-primary-container text-white px-lg py-sm rounded-lg font-label-md uppercase tracking-widest hover:bg-[#E54E14] transition-all">
+                Save Address
+            </button>
+            <button type="button" onclick="document.getElementById('add-address-form').classList.add('hidden')"
+                class="border border-outline-variant text-on-surface-variant px-lg py-sm rounded-lg font-label-md uppercase tracking-widest hover:bg-surface-container transition-colors">
+                Cancel
+            </button>
+        </div>
+    </form>
+</div>
+
+{% else %}
+<!-- No addresses - show add button -->
+<div class="text-center py-lg">
+    <span class="material-symbols-outlined text-6xl text-on-surface-variant mb-md block">location_off</span>
+    <p class="font-body-md text-on-surface-variant mb-lg">No shipping addresses found. Add one to continue.</p>
+
+    <div id="add-address-form">
+        <form method="POST" action="{% url 'add_address' %}" class="grid grid-cols-1 md:grid-cols-2 gap-md text-left">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <div class="flex flex-col gap-xs">
+                <label class="font-label-sm text-label-sm uppercase text-on-surface-variant tracking-wider">Phone Number</label>
+                <input type="text" name="phone_number" required
+                    class="px-md py-sm border border-outline-variant rounded-lg bg-surface text-on-surface focus:outline-none focus:border-primary-container" />
+            </div>
+            <div class="flex flex-col gap-xs">
+                <label class="font-label-sm text-label-sm uppercase text-on-surface-variant tracking-wider">City</label>
+                <input type="text" name="city" required
+                    class="px-md py-sm border border-outline-variant rounded-lg bg-surface text-on-surface focus:outline-none focus:border-primary-container" />
+            </div>
+            <div class="flex flex-col gap-xs">
+                <label class="font-label-sm text-label-sm uppercase text-on-surface-variant tracking-wider">State</label>
+                <input type="text" name="state" required
+                    class="px-md py-sm border border-outline-variant rounded-lg bg-surface text-on-surface focus:outline-none focus:border-primary-container" />
+            </div>
+            <div class="flex flex-col gap-xs">
+                <label class="font-label-sm text-label-sm uppercase text-on-surface-variant tracking-wider">Location / Address</label>
+                <input type="text" name="location" required
+                    class="px-md py-sm border border-outline-variant rounded-lg bg-surface text-on-surface focus:outline-none focus:border-primary-container" />
+            </div>
+            <div class="md:col-span-2">
+                <button type="submit"
+                    class="bg-primary-container text-white px-lg py-md rounded-lg font-label-md uppercase tracking-widest hover:bg-[#E54E14] transition-all">
+                    Save Address
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endif %}
+</section>
+<!-- Step 2: Payment Method -->
+<section class="bg-surface-container-lowest border border-surface-container rounded-lg p-lg">
+<div class="flex items-center gap-md mb-lg">
+<span class="font-label-md text-label-md bg-primary-container text-on-primary w-6 h-6 flex items-center justify-center rounded-xs">02</span>
+<h2 class="font-headline-md text-headline-md font-medium">Payment Method</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<label class="relative flex items-start p-md border-2 border-primary cursor-pointer rounded-lg bg-surface-container-low payment-option">
+<input checked="" class="mt-1 text-primary-container focus:ring-primary-container h-4 w-4" name="payment" type="radio" value="esewa"/>
+<div class="ml-md">
+<span class="block font-body-md font-bold">eSewa</span>
+<span class="block font-label-sm text-label-sm text-on-surface-variant uppercase mt-1">Digital Wallet</span>
+<div class="mt-md">
+<span class="material-symbols-outlined text-primary">account_balance_wallet</span>
+</div>
+</div>
+</label>
+<label class="relative flex items-start p-md border border-surface-container cursor-pointer rounded-lg hover:border-outline transition-colors payment-option">
+<input class="mt-1 text-primary-container focus:ring-primary-container h-4 w-4" name="payment" type="radio" value="cod"/>
+<div class="ml-md">
+<span class="block font-body-md font-bold">Cash on Delivery (COD)</span>
+<span class="block font-label-md text-label-md text-on-surface-variant mt-1 normal-case">Pay when your hardware arrives</span>
+<div class="mt-md">
+<span class="material-symbols-outlined text-on-surface-variant">payments</span>
+</div>
+</div>
+</label>
+</div>
+</section>
+</div>
+<!-- Right Column: Order Summary (Sticky) -->
+<aside class="sticky top-[100px]">
+<div class="bg-surface-container-lowest border border-surface-container rounded-lg shadow-sm overflow-hidden">
+<div class="border-t-4 border-primary-container p-lg">
+<h3 class="font-headline-md text-headline-md font-semibold mb-lg">System Inventory</h3>
+<!-- Product List -->
+<div class="flex flex-col gap-md">
+{% for entry in items %}
+<div class="flex gap-md group">
+<div class="w-16 h-16 bg-surface-container rounded flex-shrink-0 overflow-hidden border border-surface-container">
+    {% if entry.image %}
+    <img class="w-full h-full object-cover" src="{{ entry.image.url }}" alt="{{ entry.product.name }}" />
+    {% endif %}
+</div>
+<div class="flex-grow">
+    <p class="font-body-md font-bold leading-tight">{{ entry.product.name }}</p>
+    {% with variant=entry.variants.first %}
+    {% if variant %}
+    <p class="font-label-sm text-label-sm text-on-surface-variant mt-1">{{ variant.type }}: {{ variant.value }}</p>
+    {% endif %}
+    {% endwith %}
+    <p class="font-label-md text-label-md text-primary mt-1">${{ entry.line_total }}</p>
+</div>
+</div>
+{% empty %}
+<p class="text-on-surface-variant text-center py-md">No items in cart.</p>
+{% endfor %}
+</div>
+<!-- Cost Summary -->
+<div class="mt-lg pt-lg border-t border-surface-container flex flex-col gap-sm">
+<div class="flex justify-between font-body-md">
+<span class="text-on-surface-variant">Subtotal Architecture</span>
+<span class="font-label-md">${{ total }}</span>
+</div>
+<div class="flex justify-between font-body-md">
+<span class="text-on-surface-variant">Logistics (Ground)</span>
+<span class="font-label-md text-primary">FREE</span>
+</div>
+<div class="flex justify-between font-body-md">
+<span class="text-on-surface-variant">Tax Calculation</span>
+<span class="font-label-md">$0.00</span>
+</div>
+<div class="flex justify-between mt-md pt-md border-t border-surface-container">
+<span class="font-headline-md font-bold uppercase tracking-tight">Total Payable</span>
+<span class="font-headline-md font-extrabold text-primary">${{ total }}</span>
+</div>
+</div>
+<!-- Action -->
+<button class="w-full mt-xl bg-primary-container text-on-primary py-md rounded-xs font-label-md uppercase tracking-widest font-bold hover:bg-primary transition-all active:scale-[0.98]">
+                            Complete Order
+                        </button>
+<div class="mt-md flex items-center justify-center gap-xs text-on-surface-variant opacity-60">
+<span class="material-symbols-outlined text-sm" style="font-size: 14px;">lock</span>
+<span class="font-label-sm">256-bit AES Encrypted Connection</span>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer (Shell Implementation) -->
+<script>
+        // Micro-interaction for form highlighting
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.querySelector('label')?.classList.add('text-primary');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.querySelector('label')?.classList.remove('text-primary');
+            });
+        });
+
+        // Shipping selection border logic
+        const shippingRadios = document.querySelectorAll('input[name="shipping"]');
+        shippingRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                shippingRadios.forEach(r => {
+                    const parent = r.closest('label');
+                    if (r.checked) {
+                        parent.classList.add('border-primary', 'bg-surface-container-low');
+                        parent.classList.remove('border-surface-container');
+                    } else {
+                        parent.classList.remove('border-primary', 'bg-surface-container-low');
+                        parent.classList.add('border-surface-container');
+                    }
+                });
+            });
+        });
+    </script>
+<script>
+    const paymentRadios = document.querySelectorAll('input[name="payment"]');
+    paymentRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+            paymentRadios.forEach(r => {
+                const parent = r.closest('.payment-option');
+                if (r.checked) {
+                    parent.classList.add('border-primary', 'bg-surface-container-low', 'border-2');
+                    parent.classList.remove('border-surface-container', 'border');
+                } else {
+                    parent.classList.remove('border-primary', 'bg-surface-container-low', 'border-2');
+                    parent.classList.add('border-surface-container', 'border');
+                }
+            });
+        });
+    });
+
+    const addressRadios = document.querySelectorAll('input[name="address_id"]');
+    addressRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+            addressRadios.forEach(r => {
+                const parent = r.closest('.address-option');
+                if (r.checked) {
+                    parent.classList.add('border-primary', 'bg-surface-container-low');
+                    parent.classList.remove('border-surface-container');
+                } else {
+                    parent.classList.remove('border-primary', 'bg-surface-container-low');
+                    parent.classList.add('border-surface-container');
+                }
+            });
+        });
+    });
+</script></body>
+{% endblock %}

@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.views.decorators.http import require_POST
 from user.forms import RegistrationForm,SignInForm
 from django.contrib.auth.decorators import login_required
-from user.models import User
+from user.models import User, Address
 from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
@@ -61,3 +62,29 @@ def sign_out(request):
     logout(request)
     messages.success(request, 'Logged out.')
     return redirect('sign_in')
+
+
+@login_required
+@require_POST
+def add_address(request):
+    phone_number = request.POST.get('phone_number', '').strip()
+    city = request.POST.get('city', '').strip()
+    state = request.POST.get('state', '').strip()
+    location = request.POST.get('location', '').strip()
+    next_url = request.POST.get('next', '/')
+
+    if not all([phone_number, city, state, location]):
+        messages.error(request, 'All fields are required.')
+        return redirect(next_url)
+
+    is_default = not request.user.addresses.exists()
+    Address.objects.create(
+        user=request.user,
+        phone_number=phone_number,
+        city=city,
+        state=state,
+        location=location,
+        is_default=is_default,
+    )
+    messages.success(request, 'Address added successfully.')
+    return redirect(next_url)

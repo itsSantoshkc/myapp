@@ -65,7 +65,7 @@ def add_to_cart(request):
 
     messages.success(request, f'"{product.name}" added to cart.')
     return redirect(next_url)
-
+@login_required
 def remove_from_cart(request):
     if request.method != 'POST':
         return redirect('view_cart')
@@ -103,6 +103,8 @@ def view_cart(request):
         'total': total,
         'cart': cart,
     })
+
+@login_required
 def update_cart(request):
     if request.method != 'POST':
         return redirect('view_cart')
@@ -125,3 +127,33 @@ def update_cart(request):
         except CartItem.DoesNotExist:
             pass
     return redirect('view_cart')
+
+def checkout(request):
+    cart = Cart.objects.prefetch_related(
+        'items__product__images',
+        'items__variants',
+    ).filter(user=request.user).first()
+
+    items = []
+    total = 0
+
+    if cart:
+        for item in cart.items.all():
+            line_total = item.line_total
+            total += line_total
+            items.append({
+                'item': item,
+                'product': item.product,
+                'variants': item.variants.all(),
+                'image': item.product.images.filter(is_primary=True).first(),
+                'line_total': line_total,
+            })
+
+    addresses = request.user.addresses.all()
+
+    return render(request, 'checkout/checkout.html', {
+        'items': items,
+        'total': total,
+        'cart': cart,
+        'addresses': addresses,
+    })

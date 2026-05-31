@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.conf import settings
 
 
 class User(AbstractUser):
@@ -23,3 +24,19 @@ class User(AbstractUser):
 
     def __str__(self):
         return f'{self.username} ({self.role})'
+
+
+class Address(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='addresses')
+    phone_number = models.CharField(max_length=20)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    location = models.CharField(max_length=255)
+    is_default = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-is_default', '-created_at']
+
+    def __str__(self):
+        return f'{self.location}, {self.city}, {self.state}'
