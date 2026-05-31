@@ -1,7 +1,6 @@
 # cart/models.py
 from django.db import models
 from django.conf import settings
-import product
 from product.models import Product, ProductVariant
 
 

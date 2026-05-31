@@ -218,9 +218,20 @@ Checkout - Precision PC
 </div>
 </div>
 <!-- Action -->
-<button class="w-full mt-xl bg-primary-container text-on-primary py-md rounded-xs font-label-md uppercase tracking-widest font-bold hover:bg-primary transition-all active:scale-[0.98]">
-                            Complete Order
-                        </button>
+<form method="POST" action="{% url 'place_order' %}">
+    {% csrf_token %}
+    {% if addresses %}
+    {% for address in addresses %}
+    {% if forloop.first %}
+    <input type="hidden" name="address_id" value="{{ address.id }}" id="selected-address">
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    <input type="hidden" name="payment" value="esewa" id="selected-payment">
+    <button type="submit" class="w-full mt-xl bg-primary-container text-on-primary py-md rounded-xs font-label-md uppercase tracking-widest font-bold hover:bg-primary transition-all active:scale-[0.98]">
+        Complete Order
+    </button>
+</form>
 <div class="mt-md flex items-center justify-center gap-xs text-on-surface-variant opacity-60">
 <span class="material-symbols-outlined text-sm" style="font-size: 14px;">lock</span>
 <span class="font-label-sm">256-bit AES Encrypted Connection</span>
@@ -285,11 +296,19 @@ Checkout - Precision PC
                 if (r.checked) {
                     parent.classList.add('border-primary', 'bg-surface-container-low');
                     parent.classList.remove('border-surface-container');
+                    document.getElementById('selected-address').value = r.value;
                 } else {
                     parent.classList.remove('border-primary', 'bg-surface-container-low');
                     parent.classList.add('border-surface-container');
                 }
             });
+        });
+    });
+
+    const paymentRadiosForm = document.querySelectorAll('input[name="payment"]');
+    paymentRadiosForm.forEach(radio => {
+        radio.addEventListener('change', () => {
+            document.getElementById('selected-payment').value = radio.value;
         });
     });
 </script></body>

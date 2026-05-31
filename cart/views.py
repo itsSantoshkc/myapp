@@ -157,3 +157,17 @@ def checkout(request):
         'cart': cart,
         'addresses': addresses,
     })
+
+
+@login_required
+@require_POST
+def place_order(request):
+    address_id = request.POST.get('address_id')
+    payment_method = request.POST.get('payment')
+
+    print(f"=== ORDER PLACED ===")
+    print(f"Payment Method: {payment_method}")
+    print(f"Address ID: {address_id}")
+
+    messages.success(request, f'Order placed! Payment: {payment_method}')
+    return redirect('view_cart')
