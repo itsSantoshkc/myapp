@@ -8,45 +8,36 @@ from product.models import Product, ProductVariant, Category
 
 
 CATEGORY_LABELS = {
-    'cpus': 'Processors',
-    'gpus': 'Graphics Cards',
-    'motherboards': 'Motherboards',
-    'ram': 'Memory',
-    'storage': 'Storage',
-    'air-coolers': 'Air Coolers',
-    'liquid-coolers': 'Liquid Coolers',
-    'case-fans': 'Case Fans',
-    'keyboards': 'Keyboards',
-    'mice': 'Mice',
-    'monitors': 'Monitors',
-    'headsets': 'Headsets',
-    'pc-cases': 'PC Cases',
-    'power-supplies': 'Power Supplies',
+    'men-watches': "Men's Watches",
+    'women-watches': "Women's Watches",
+    'smart-watches': 'Smart Watches',
+    'luxury-watches': 'Luxury Watches',
+    'sports-watches': 'Sports Watches',
 }
 
 
 from django.db.models import Count
 
 CATEGORY_META = {
-    'cpus': {'icon': 'memory', 'desc': 'Multi-core architectures for heavy parallel processing.'},
-    'gpus': {'icon': 'developer_board', 'desc': 'CUDA-enabled rendering and AI acceleration engines.'},
-    'storage': {'icon': 'database', 'desc': 'NVMe Gen5 drives with sustained 12GB/s throughput.'},
-    'motherboards': {'icon': 'settings_input_component', 'desc': 'Server-grade PCB design for thermal stability.'},
-    'ram': {'icon': 'cable', 'desc': 'High-frequency DDR5 modules for bandwidth-heavy workloads.'},
+    'men-watches': {'icon': 'watch', 'desc': 'Engineered timepieces built for everyday performance.'},
+    'women-watches': {'icon': 'watch_later', 'desc': 'Elegant designs crafted to complement any style.'},
+    'smart-watches': {'icon': 'smartphone', 'desc': 'Connected wearables with health and fitness tracking.'},
+    'luxury-watches': {'icon': 'diamond', 'desc': 'Haute horology with premium materials and finishing.'},
+    'sports-watches': {'icon': 'fitness_center', 'desc': 'Rugged, feature-rich watches built for the active life.'},
 }
 
 
 def index(request):
     categories = (
         Category.objects
-        .filter(slug__in=['cpus', 'gpus', 'storage', 'ram', 'motherboards'])
+        .filter(slug__in=['men-watches', 'women-watches', 'smart-watches', 'luxury-watches', 'sports-watches'])
         .annotate(product_count=Count('products'))
         .order_by('name')
     )
 
     featured_products = Product.objects.select_related('category').prefetch_related('images', 'variants')
 
-    main_featured = featured_products.filter(category__slug='gpus').order_by('-base_price').first()
+    main_featured = featured_products.filter(category__slug='luxury-watches').order_by('-base_price').first()
     secondary_featured = list(featured_products.exclude(id=main_featured.id if main_featured else None).order_by('-base_price')[:2])
 
     return render(request, "product/index.html", {
@@ -97,7 +88,7 @@ def searchProduct(request):
     sort_query = request.GET.get("sort", "").strip()
     variant_filters = request.GET.getlist("v")
 
-    products = Product.objects.select_related('category').prefetch_related('images', 'variants')
+    products = Product.objects.select_related('category').prefetch_related('images', 'variants').order_by('id')
 
     if search_query:
         products = products.filter(
@@ -151,7 +142,7 @@ def searchProduct(request):
                     values.append({'value': v.value, 'min_id': str(v.id)})
             filter_options.append({'type': vtype, 'values': values})
 
-    all_categories = Category.objects.filter(slug__in=['cpus', 'gpus', 'storage', 'ram', 'motherboards']).order_by('name')
+    all_categories = Category.objects.filter(slug__in=['men-watches', 'women-watches', 'smart-watches', 'luxury-watches', 'sports-watches']).order_by('name')
 
     context = {
         "products": page_obj,

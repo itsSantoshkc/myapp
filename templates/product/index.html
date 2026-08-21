@@ -1,6 +1,6 @@
 {% extends 'product/template.html' %}
 {% load static %}
-{% block title %}Precision PC{% endblock %}
+{% block title %}Precision{% endblock %}
 {% block content %}
 
     <main>
@@ -8,26 +8,26 @@
         <section class="relative h-[600px] w-full overflow-hidden bg-white">
             <div class="absolute inset-0 z-0">
                 <img class="w-full h-full object-cover opacity-90"
-                    data-alt="A professional close-up shot of a high-performance custom liquid-cooled PC build. The interior features clean cable management, matte black components, and subtle white LED illumination. A soft atmospheric light highlight emphasizes the hardware's metallic textures. The overall mood is clinical, sophisticated, and technically precise with a modern light-mode studio background."
+                    data-alt="A professional studio photograph of a luxury wristwatch on a clean surface. The timepiece features a brushed metal case, a detailed dial, and a premium leather strap, photographed with soft clinical lighting that emphasizes the craftsmanship and fine metallic textures."
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJ7Ir2FWv5gzXoRiIO5h6UQT0rgo_3C5lrRCVJo7L9Db4p_XYbuxCl6iV5YdKUWYBKZ9CSidNjMw9pR5Epuusq6VLRI52JiIEtRFTYd8wqbC7O92itW0ymoB-7l2UpYOw5MWlagtHdjqpGWD-8rldMCJ4KPx3kf9EzAzrsHaKuQ7p9hO4cAqk0SEOtEQp0gB1N1HnmTvFzUCVGv4rQ77bUJublFC36C_AurSwIUlssUxrYf--bzev71sYJF6oncMqzi0fnrs4kKBU" />
                 <div class="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent"></div>
             </div>
             <div
                 class="relative z-10 max-w-[1440px] mx-auto px-margin-desktop h-full flex flex-col justify-center items-start">
                 <div class="max-w-2xl">
-                    <span
-                        class="font-label-md text-label-md uppercase tracking-[0.2em] text-primary mb-md block">Premium
-                        Hardware Retail</span>
-                    <h1 class="font-headline-lg text-headline-lg mb-md leading-tight">Elite Components.<br />Maximum
-                        Performance.</h1>
-                    <p class="font-body-lg text-body-lg text-on-surface-variant mb-xl max-w-lg">
-                        The definitive destination for high-end computer hardware. Source the components needed for
-                        data-heavy workflows, AI research, and professional-grade computing.
-                    </p>
+                        <span
+                            class="font-label-md text-label-md uppercase tracking-[0.2em] text-primary mb-md block">Premium
+                            Watch Retail</span>
+                        <h1 class="font-headline-lg text-headline-lg mb-md leading-tight">Precision Timepieces.<br />Unmatched
+                            Craftsmanship.</h1>
+                        <p class="font-body-lg text-body-lg text-on-surface-variant mb-xl max-w-lg">
+                            The definitive destination for fine watches. Discover timepieces crafted for everyday elegance,
+                            active lifestyles, and the most discerning collectors.
+                        </p>
                     <div class="flex gap-md">
                         <a href="{% url 'searchProduct' %}"
                             class="bg-primary-container text-white px-lg py-md rounded font-body-md font-bold hover:bg-[#E54E14] transition-all retro-glow active:scale-95">
-                            SHOP ALL HARDWARE
+                            SHOP ALL WATCHES
                         </a>
                         <a href="{% url 'searchProduct' %}?sort=price_desc"
                             class="border-2 border-on-surface text-on-surface px-lg py-md rounded font-body-md font-bold hover:bg-surface-container transition-all active:scale-95">
@@ -55,8 +55,8 @@
         <section class="py-xl max-w-[1440px] mx-auto px-margin-desktop">
             <div class="flex justify-between items-end mb-lg">
                 <div>
-                    <h2 class="font-headline-md text-headline-md">Hardware Categories</h2>
-                    <p class="text-on-surface-variant font-body-md">Engineered components for specialized computing.</p>
+                    <h2 class="font-headline-md text-headline-md">Watch Collections</h2>
+                    <p class="text-on-surface-variant font-body-md">Curated timepieces for every style and occasion.</p>
                 </div>
                 <a class="text-primary font-label-md hover:underline decoration-2 underline-offset-4 flex items-center gap-xs"
                     href="{% url 'searchProduct' %}">
@@ -95,7 +95,7 @@
             <div class="max-w-[1440px] mx-auto px-margin-desktop">
                 <div class="mb-lg">
                     <h2 class="font-headline-md text-headline-md">Featured Products</h2>
-                    <p class="text-on-surface-variant font-body-md">Hardware hand-picked for stability and maximum output.</p>
+                    <p class="text-on-surface-variant font-body-md">Timepieces hand-picked for style, reliability, and everyday wear.</p>
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-md items-stretch">
                     {% if main_featured %}
@@ -159,34 +159,34 @@
             <div class="bg-on-surface rounded-xl overflow-hidden flex flex-col lg:flex-row">
                 <div class="lg:w-1/2 p-xl flex flex-col justify-center">
                     <div class="border-l-4 border-primary pl-lg mb-lg">
-                        <h2 class="font-headline-lg text-white text-headline-lg mb-md">Professional Grade Distribution
+                        <h2 class="font-headline-lg text-white text-headline-lg mb-md">Professional Grade Service
                         </h2>
-                        <p class="text-surface-container font-body-lg">Every component we stock is vetted for thermal
-                            synergy and long-term reliability. We source only the highest quality silicon for demanding
-                            technical environments.</p>
+                        <p class="text-surface-container font-body-lg">Every timepiece we stock is vetted for authenticity
+                            and long-term reliability. We source only the highest quality watches from trusted
+                            manufacturers and authorized dealers.</p>
                     </div>
                     <ul class="space-y-md mb-xl">
                         <li class="flex items-center gap-md text-white font-body-md">
                             <span class="material-symbols-outlined text-primary">check_circle</span>
-                            Certified authentic manufacturer warranty on all items.
+                            Certified authentic warranty on all items.
                         </li>
                         <li class="flex items-center gap-md text-white font-body-md">
                             <span class="material-symbols-outlined text-primary">check_circle</span>
-                            Climate-controlled storage and anti-static handling.
+                            Carefully inspected and securely packaged handling.
                         </li>
                         <li class="flex items-center gap-md text-white font-body-md">
                             <span class="material-symbols-outlined text-primary">check_circle</span>
-                            Express delivery for mission-critical hardware replacements.
+                            Express delivery for your new favorite timepiece.
                         </li>
                     </ul>
                     <a href="{% url 'searchProduct' %}"
                         class="bg-primary-container text-white px-xl py-lg rounded font-body-md font-extrabold uppercase tracking-widest hover:bg-[#E54E14] transition-all self-start retro-glow">
-                        BROWSE INVENTORY
+                        BROWSE COLLECTION
                     </a>
                 </div>
                 <div class="lg:w-1/2 relative bg-[#121417]">
                     <img class="w-full h-full object-cover opacity-80"
-                        data-alt="A clean, isometric view of various PC components arranged on a technical blueprint. CPU, RAM, and SSD modules are displayed in a precise grid layout. The lighting is high-contrast, professional, and captures the fine circuit board details. The color palette is dark grey, silver, and punctuated by the brand's signature retro orange accents in the interface overlays."
+                        data-alt="A clean, arranged flat-lay of various wristwatches on a technical blueprint. Different case shapes, dials, and straps are displayed in a precise grid layout. The lighting is high-contrast, professional, and captures the fine detailing, with a color palette of dark grey, silver, and the brand's signature retro orange accents in the interface overlays."
                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5iYWjIY5PbSfRADZmVDl-TsqTEDGWPz5m2Iv8lMpY4OBNspcbRZ2kcu86c4Gc9yz_YYBaZUXlOLy_2-sSr_OlR7g11mHRQsF0-kILESEK9zJXx5bPqTV1T_AYnu-8zdm7qBOrI2PDoQrGSa0aOv1IUGyxQVsgoLgnrYKz8hru0299cqpf8eb-yES_BeznWQb0z8BqzEcHz_78OdRFezX6v3iNAPtrGxj0Ulr-oWudik_oBC7cY83mOnpSmnHHrUbOAEGeIN_NTSo" />
                     <div class="absolute inset-0 flex items-center justify-center">
                         <div
