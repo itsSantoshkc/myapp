@@ -1,0 +1,40 @@
+{% extends 'product/template.html' %}
+{% block title %}Order {{ order.id }} - Precision PC{% endblock %}
+
+{% block content %}
+<main class="flex-grow max-w-[720px] mx-auto w-full px-margin-desktop py-xl">
+    <div class="bg-surface-container-lowest border border-surface-container rounded-lg p-xl shadow-sm">
+        <header class="mb-lg pb-md border-b border-surface-container-highest">
+            <h1 class="font-headline-lg text-headline-lg font-semibold text-on-surface">Order Details</h1>
+            <p class="font-body-md text-body-md text-on-surface-variant">{{ order.id }}</p>
+        </header>
+
+        <div class="space-y-sm mb-xl">
+            <div class="flex justify-between"><span class="font-body-md text-on-surface-variant">Status</span><span class="font-label-md font-bold text-on-surface">{{ order.status|title }}</span></div>
+            <div class="flex justify-between"><span class="font-body-md text-on-surface-variant">Payment</span><span class="font-label-md font-bold text-on-surface">{{ order.payment_status|title }} ({{ order.payment_method|upper }})</span></div>
+            {% if order.payment_status == 'paid' and order.transaction_uuid %}
+            <div class="flex justify-between"><span class="font-body-md text-on-surface-variant">Transaction Code</span><span class="font-label-md font-bold text-on-surface">{{ order.transaction_uuid }}</span></div>
+            {% endif %}
+            <div class="flex justify-between"><span class="font-body-md text-on-surface-variant">Subtotal</span><span class="font-label-md font-bold text-on-surface">Rs. {{ order.subtotal }}</span></div>
+            <div class="flex justify-between"><span class="font-body-md text-on-surface-variant">Delivery</span><span class="font-label-md font-bold text-on-surface">Rs. {{ order.delivery_charge }}</span></div>
+            <div class="flex justify-between pt-md border-t border-surface-container-highest"><span class="font-headline-md text-on-surface">Total</span><span class="font-headline-md font-bold text-on-surface">Rs. {{ order.total_amount }}</span></div>
+        </div>
+
+        <div class="space-y-md">
+            {% for item in order.items.all %}
+            <div class="flex items-center gap-md bg-surface-container rounded-lg p-md">
+                <div class="flex-grow">
+                    <p class="font-body-lg text-body-lg text-on-surface">{{ item.product.name }}</p>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant">Qty: {{ item.quantity }} &times; Rs. {{ item.unit_price }}</p>
+                </div>
+                <span class="font-label-md font-bold text-on-surface">Rs. {{ item.line_total }}</span>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="mt-xl pt-lg border-t border-surface-container-highest">
+            <a href="/" class="font-label-md font-bold text-primary hover:underline">Continue Shopping</a>
+        </div>
+    </div>
+</main>
+{% endblock %}

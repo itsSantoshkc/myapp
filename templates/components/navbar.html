@@ -26,7 +26,15 @@
         </form>
     {% if  user.is_authenticated %}
     <a href="{% url 'view_cart' %}" class="material-symbols-outlined {% if request.resolver_match.url_name == 'view_cart' %}text-primary{% else %}text-on-surface-variant{% endif %} hover:bg-surface-container-low p-2 rounded-full transition-all">shopping_cart</a>
-    <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-all ">account_circle</button>
+    <div class="relative group">
+        <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-all">account_circle</button>
+        <div class="absolute right-0 mt-2 w-48 bg-surface-container-lowest border border-surface-container rounded-lg shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 delay-1000 group-hover:delay-0 z-50">
+            <a href="{% url 'my_orders' %}"
+                class="block px-4 py-2 font-body-md text-body-md text-on-surface hover:bg-surface-container transition-colors">My Orders</a>
+            <a href="{% url 'signOut' %}"
+                class="block px-4 py-2 font-body-md text-body-md text-error hover:bg-surface-container transition-colors">Log Out</a>
+        </div>
+    </div>
 {% else %}
 <a href="{% url 'signIn' %}"
        class="px-4 py-2 rounded hover:bg-white hover:text-on-surface hover:border hover:border-outline bg-primary-container text-white  text-sm font-medium  transition-colors ">

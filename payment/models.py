@@ -1,3 +1,6 @@
+import base64
+import hashlib
+import hmac
 import uuid
 
 from django.db import models
@@ -20,3 +23,6 @@ class Payment(models.Model):
     status = models.CharField(max_length=30, choices=STATUS_CHOICES, default='pending')
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     paid_at = models.DateTimeField(null=True, blank=True)
+
+
+    

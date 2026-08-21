@@ -14,7 +14,7 @@ def register(request):
         if form.is_valid():
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
-            email = form.cleaned_data['email']
+            email = form.cleaned_data['email'].lower()
             password = form.cleaned_data['password']
 
             if User.objects.filter(email=email).exists():
@@ -31,20 +31,24 @@ def register(request):
             messages.success(request, f'Welcome, {user.first_name}!')
             return redirect('/')
         else:
-            messages.error(request,form.errors)
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, error)
     return render(request,"auth/register.html")
 
 
 def signIn(request):
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('index')
+
 
     form = SignInForm(request.POST or None)
 
     if request.method == 'POST' and form.is_valid():
+        email = form.cleaned_data['email'].lower()
         user = authenticate(
             request,
-            username=form.cleaned_data['email'],
+            username=email,
             password=form.cleaned_data['password'],
         )
         if user is not None:
@@ -61,7 +65,7 @@ def signIn(request):
 def sign_out(request):
     logout(request)
     messages.success(request, 'Logged out.')
-    return redirect('sign_in')
+    return redirect('signIn')
 
 
 @login_required

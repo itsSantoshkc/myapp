@@ -57,6 +57,15 @@
                     <p class="font-body-md text-body-md text-on-surface-variant">Create your precision account to start
                         building.</p>
                 </div>
+                {% if messages %}
+                <div class="mb-lg space-y-sm">
+                    {% for message in messages %}
+                    <div class="font-body-md text-body-md px-md py-sm rounded-lg border {% if message.tags == 'error' %}bg-error-container text-on-error-container border-error{% else %}bg-primary-container text-on-primary-container border-primary{% endif %}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
                 <form class="space-y-lg" action="{% url 'register' %}" method="post">
                     {% csrf_token %}
                     <!-- Name Field -->
@@ -85,7 +94,7 @@
                         <div class="relative">
                             <input
                                 class="w-full h-12 px-md bg-surface-bright border border-outline-variant text-on-surface font-label-md focus:outline-none focus:border-primary-container retro-orange-glow transition-all rounded-lg"
-                                id="email" name="email" placeholder="ARCHITECTURE@SYSTEM.COM" type="email" />
+                                id="email" name="email" placeholder="architecture@system.com" type="email" autocapitalize="none" />
                         </div>
                     </div>
                     <!-- Password Field -->
@@ -98,7 +107,7 @@
                         <div class="relative">
                             <input
                                 class="w-full h-12 px-md bg-surface-bright border border-outline-variant text-on-surface font-label-md focus:outline-none focus:border-primary-container retro-orange-glow transition-all rounded-lg"
-                                id="password" name="password" placeholder="••••••••••••" type="password" />
+                                id="password" name="password" placeholder="••••••••••••" type="password" autocapitalize="none" />
                             <button
                                 class="absolute right-md top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary"
                                 type="button">
@@ -115,7 +124,7 @@
                         <div class="relative">
                             <input
                                 class="w-full h-12 px-md bg-surface-bright border border-outline-variant text-on-surface font-label-md focus:outline-none focus:border-primary-container retro-orange-glow transition-all rounded-lg"
-                                id="confirm_password" name="confirm_password" placeholder="••••••••••••" type="password" />
+                                id="confirm_password" name="confirm_password" placeholder="••••••••••••" type="password" autocapitalize="none" />
                             <button
                                 class="absolute right-md top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary"
                                 id="toggle-confirm-password"

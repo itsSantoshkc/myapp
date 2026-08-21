@@ -1,0 +1,68 @@
+{% extends 'product/template.html' %}
+{% load static %}
+{% block title %}Payment Successful - Precision PC{% endblock %}
+
+{% block content %}
+
+<style>
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+</style>
+
+<main class="flex-grow max-w-[720px] mx-auto w-full px-margin-desktop py-xl">
+    {% if messages %}
+    <div class="mb-lg space-y-sm">
+        {% for message in messages %}
+        <div class="font-body-md text-body-md px-md py-sm rounded-lg border {% if message.tags == 'error' %}bg-error-container text-on-error-container border-error{% else %}bg-primary-container text-on-primary-container border-primary{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="bg-surface-container-lowest border border-surface-container rounded-lg p-xl text-center shadow-sm">
+        <div class="mx-auto mb-lg flex items-center justify-center w-16 h-16 rounded-full bg-primary-container text-on-primary-container">
+            <span class="material-symbols-outlined text-[40px]">check_circle</span>
+        </div>
+        <h1 class="font-headline-lg text-headline-lg font-semibold text-on-surface mb-sm">Payment Successful</h1>
+        <p class="font-body-lg text-body-lg text-on-surface-variant mb-xl">
+            Thank you! Your payment is complete and your order is confirmed.
+        </p>
+
+        {% if order %}
+        <div class="text-left bg-surface-container rounded-lg p-lg space-y-sm mb-xl">
+            <div class="flex justify-between">
+                <span class="font-body-md text-body-md text-on-surface-variant">Order</span>
+                <span class="font-label-md text-label-md font-bold text-on-surface">{{ order.id }}</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="font-body-md text-body-md text-on-surface-variant">eSewa Transaction</span>
+                <span class="font-label-md text-label-md font-bold text-on-surface">{{ data.transaction_code }}</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="font-body-md text-body-md text-on-surface-variant">Amount Paid</span>
+                <span class="font-label-md text-label-md font-bold text-on-surface">Rs. {{ order.total_amount }}</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="font-body-md text-body-md text-on-surface-variant">Status</span>
+                <span class="font-label-md text-label-md font-bold text-primary">{{ order.status|title }}</span>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="flex flex-col sm:flex-row gap-md justify-center">
+            {% if order %}
+            <a href="{% url 'order_detail' pk=order.id %}"
+                class="px-xl py-md bg-primary-container text-on-primary font-bold rounded-lg hover:bg-primary transition-all">
+                View Order
+            </a>
+            {% endif %}
+            <a href="/"
+                class="px-xl py-md bg-surface-container text-on-surface-variant font-bold rounded-lg hover:bg-surface-container-high transition-colors">
+                Continue Shopping
+            </a>
+        </div>
+    </div>
+</main>
+{% endblock %}

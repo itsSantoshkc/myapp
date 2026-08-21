@@ -1,9 +1,9 @@
 # cart/views.py
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.shortcuts import redirect, get_object_or_404,render
+from django.shortcuts import redirect,render
 from django.views.decorators.http import require_POST
-from django.db import models
+
 from product.models import ProductVariant
 from cart.models import Cart, CartItem
 
@@ -65,6 +65,8 @@ def add_to_cart(request):
 
     messages.success(request, f'"{product.name}" added to cart.')
     return redirect(next_url)
+
+
 @login_required
 def remove_from_cart(request):
     if request.method != 'POST':
@@ -128,6 +130,7 @@ def update_cart(request):
             pass
     return redirect('view_cart')
 
+@login_required
 def checkout(request):
     cart = Cart.objects.prefetch_related(
         'items__product__images',
@@ -159,15 +162,3 @@ def checkout(request):
     })
 
 
-@login_required
-@require_POST
-def place_order(request):
-    address_id = request.POST.get('address_id')
-    payment_method = request.POST.get('payment')
-
-    print(f"=== ORDER PLACED ===")
-    print(f"Payment Method: {payment_method}")
-    print(f"Address ID: {address_id}")
-
-    messages.success(request, f'Order placed! Payment: {payment_method}')
-    return redirect('view_cart')

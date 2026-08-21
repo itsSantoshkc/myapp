@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<body onload="document.getElementById('esewa-form').submit()">
+    <form id="esewa-form" action="{{ esewa_url }}" method="POST">
+        {% for key, value in esewa_payload.items %}
+        <input type="hidden" name="{{ key }}" value="{{ value }}" />
+        {% endfor %}
+    </form>
+    <p>Redirecting to eSewa...</p>
+</body>
+</html>

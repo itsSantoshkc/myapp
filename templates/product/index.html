@@ -63,20 +63,31 @@
                     VIEW ALL CATEGORIES <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
                 </a>
             </div>
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-md">
-                {% for cat in categories %}
-                <a href="{% url 'searchProduct' %}?c={{ cat.slug }}"
-                    class="group bg-white border border-outline-variant p-lg rounded-lg hover:border-primary-container transition-all cursor-pointer">
-                    <div
-                        class="bg-surface-container w-12 h-12 flex items-center justify-center rounded-lg mb-md group-hover:bg-primary-fixed transition-colors">
-                        <span
-                            class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">{% for key, meta in category_meta.items %}{% if key == cat.slug %}{{ meta.icon }}{% endif %}{% endfor %}</span>
-                    </div>
-                    <h3 class="font-headline-md text-[20px] mb-xs">{{ cat.name }}</h3>
-                    <p class="font-body-md text-on-surface-variant text-sm mb-md">{% for key, meta in category_meta.items %}{% if key == cat.slug %}{{ meta.desc }}{% endif %}{% endfor %}</p>
-                    <span class="font-label-sm text-label-sm text-primary uppercase">{{ cat.product_count }} Item{{ cat.product_count|pluralize }} Available</span>
-                </a>
-                {% endfor %}
+            <div class="relative">
+                <button id="cat-prev"
+                    class="absolute left-0 top-1/2 -translate-y-1/2 z-10 hidden md:flex items-center justify-center w-10 h-10 rounded-full bg-surface-container-lowest border border-surface-container shadow-md text-on-surface hover:bg-surface-container transition-colors">
+                    <span class="material-symbols-outlined">chevron_left</span>
+                </button>
+                <div id="cat-track"
+                    class="flex gap-md overflow-x-auto scroll-smooth no-scrollbar pb-2">
+                    {% for cat in categories %}
+                    <a href="{% url 'searchProduct' %}?c={{ cat.slug }}"
+                        class="group bg-white border border-outline-variant p-lg rounded-lg hover:border-primary-container transition-all cursor-pointer min-w-[260px] flex-shrink-0">
+                        <div
+                            class="bg-surface-container w-12 h-12 flex items-center justify-center rounded-lg mb-md group-hover:bg-primary-fixed transition-colors">
+                            <span
+                                class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">{% for key, meta in category_meta.items %}{% if key == cat.slug %}{{ meta.icon }}{% endif %}{% endfor %}</span>
+                        </div>
+                        <h3 class="font-headline-md text-[20px] mb-xs">{{ cat.name }}</h3>
+                        <p class="font-body-md text-on-surface-variant text-sm mb-md">{% for key, meta in category_meta.items %}{% if key == cat.slug %}{{ meta.desc }}{% endif %}{% endfor %}</p>
+                        <span class="font-label-sm text-label-sm text-primary uppercase">{{ cat.product_count }} Item{{ cat.product_count|pluralize }} Available</span>
+                    </a>
+                    {% endfor %}
+                </div>
+                <button id="cat-next"
+                    class="absolute right-0 top-1/2 -translate-y-1/2 z-10 hidden md:flex items-center justify-center w-10 h-10 rounded-full bg-surface-container-lowest border border-surface-container shadow-md text-on-surface hover:bg-surface-container transition-colors">
+                    <span class="material-symbols-outlined">chevron_right</span>
+                </button>
             </div>
         </section>
         <!-- Precision Selects - Bento Grid Layout -->
@@ -86,50 +97,60 @@
                     <h2 class="font-headline-md text-headline-md">Featured Products</h2>
                     <p class="text-on-surface-variant font-body-md">Hardware hand-picked for stability and maximum output.</p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-12 grid-rows-2 gap-md h-auto md:h-[600px]">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-md items-stretch">
                     {% if main_featured %}
                     <!-- Main Feature -->
                     <a href="{% url 'productDetails' main_featured.id %}"
-                        class="md:col-span-8 md:row-span-2 bg-white border border-outline-variant rounded-lg overflow-hidden flex flex-col relative group">
-                        <div class="p-lg relative z-10 bg-gradient-to-b from-white to-transparent">
-                            <span
-                                class="inline-block bg-primary-container text-white text-[10px] px-2 py-1 rounded font-bold uppercase tracking-widest mb-md">FLAGSHIP
-                                CHOICE</span>
-                            <h3 class="font-headline-lg text-headline-lg mb-sm">{{ main_featured.name }}</h3>
-                            <p class="font-body-md text-on-surface-variant max-w-sm mb-md">{{ main_featured.description|truncatewords:20 }}</p>
-                            <p class="font-headline-md text-primary">${{ main_featured.base_price }}</p>
-                        </div>
-                        <div class="mt-auto h-full w-full">
+                        class="lg:col-span-2 bg-white border border-outline-variant rounded-xl overflow-hidden flex flex-col group">
+                        <div class="relative flex-1 min-h-[260px] bg-surface-container-low flex items-center justify-center p-lg">
                             {% with image=main_featured.images.first %}
                             {% if image %}
-                            <img class="w-full h-full object-contain p-lg transition-transform duration-700 group-hover:scale-105"
-                                src="{{ image.url }}"
-                                alt="{{ main_featured.name }}" />
+                            <img class="max-h-[360px] w-auto object-contain transition-transform duration-700 group-hover:scale-105"
+                                src="{{ image.url }}" alt="{{ main_featured.name }}" />
                             {% endif %}
                             {% endwith %}
+                            <span class="absolute top-4 left-4 inline-block bg-primary-container text-white text-[10px] px-2 py-1 rounded font-bold uppercase tracking-widest">FLAGSHIP CHOICE</span>
+                        </div>
+                        <div class="p-lg border-t border-outline-variant">
+                            <span class="font-label-sm text-label-sm text-primary uppercase">{{ main_featured.category.name }}</span>
+                            <h3 class="font-headline-lg text-headline-lg mt-xs mb-sm">{{ main_featured.name }}</h3>
+                            <p class="font-body-md text-on-surface-variant mb-md line-clamp-2">{{ main_featured.description|truncatewords:20 }}</p>
+                            <div class="flex items-center justify-between">
+                                <span class="font-headline-md text-primary text-[22px]">${{ main_featured.base_price }}</span>
+                                <span class="material-symbols-outlined bg-surface-container-low p-2 rounded-lg group-hover:bg-primary-container group-hover:text-white transition-all">shopping_cart</span>
+                            </div>
                         </div>
                     </a>
                     {% endif %}
 
-                    {% for product in secondary_featured %}
-                    <!-- Secondary Feature -->
-                    <a href="{% url 'productDetails' product.id %}"
-                        class="md:col-span-4 bg-white border border-outline-variant rounded-lg p-lg flex flex-col justify-between group">
-                        <div>
-                            <span class="font-label-sm text-label-sm text-primary uppercase">{{ product.category.name }}</span>
-                            <h3 class="font-headline-md mt-sm">{{ product.name|truncatewords:5 }}</h3>
-                            {% with variant=product.variants.first %}
-                            {% if variant %}
-                            <p class="font-body-md text-on-surface-variant mt-xs">{{ variant.type }}: {{ variant.value }}</p>
-                            {% endif %}
-                            {% endwith %}
-                        </div>
-                        <div class="flex justify-between items-end">
-                            <span class="font-headline-md">${{ product.base_price }}</span>
-                            <span class="material-symbols-outlined bg-surface-container-low p-2 rounded hover:bg-primary-container hover:text-white transition-all">shopping_cart</span>
-                        </div>
-                    </a>
-                    {% endfor %}
+                    <!-- Secondary Features -->
+                    <div class="flex flex-col gap-md">
+                        {% for product in secondary_featured %}
+                        <a href="{% url 'productDetails' product.id %}"
+                            class="flex-1 bg-white border border-outline-variant rounded-xl p-md flex items-center gap-md group hover:border-primary-container transition-all">
+                            <div class="w-24 h-24 flex-shrink-0 bg-surface-container-low rounded-lg flex items-center justify-center">
+                                {% with image=product.images.first %}
+                                {% if image %}
+                                <img class="max-h-20 w-auto object-contain transition-transform duration-500 group-hover:scale-105" src="{{ image.url }}" alt="{{ product.name }}" />
+                                {% endif %}
+                                {% endwith %}
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <span class="font-label-sm text-label-sm text-primary uppercase block truncate">{{ product.category.name }}</span>
+                                <h3 class="font-headline-md mt-xs truncate">{{ product.name }}</h3>
+                                {% with variant=product.variants.first %}
+                                {% if variant %}
+                                <p class="font-body-md text-on-surface-variant text-sm truncate">{{ variant.type }}: {{ variant.value }}</p>
+                                {% endif %}
+                                {% endwith %}
+                            </div>
+                            <div class="flex flex-col items-end gap-xs flex-shrink-0">
+                                <span class="font-headline-md text-[18px]">${{ product.base_price }}</span>
+                                <span class="material-symbols-outlined bg-surface-container-low p-2 rounded-lg group-hover:bg-primary-container group-hover:text-white transition-all">shopping_cart</span>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </section>
@@ -179,6 +200,15 @@
     
     </main>
   
+    <style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
     <script>
         document.querySelectorAll('button').forEach(button => {
             button.addEventListener('mousedown', () => {
@@ -200,6 +230,16 @@
                 }
             });
         });
+
+        (function () {
+            const track = document.getElementById('cat-track');
+            const prev = document.getElementById('cat-prev');
+            const next = document.getElementById('cat-next');
+            if (!track || !prev || !next) return;
+            const amount = () => Math.max(track.clientWidth * 0.8, 280);
+            prev.addEventListener('click', () => track.scrollBy({ left: -amount(), behavior: 'smooth' }));
+            next.addEventListener('click', () => track.scrollBy({ left: amount(), behavior: 'smooth' }));
+        })();
     </script>
 </body>
 

@@ -1,0 +1,37 @@
+{% extends 'product/template.html' %}
+{% block title %}My Orders - Precision PC{% endblock %}
+
+{% block content %}
+<main class="flex-grow max-w-[960px] mx-auto w-full px-margin-desktop py-xl">
+    <header class="mb-lg">
+        <h1 class="font-headline-lg text-headline-lg font-semibold text-on-surface">My Orders</h1>
+    </header>
+
+    {% if orders %}
+    <div class="space-y-md">
+        {% for order in orders %}
+        <a href="{% url 'order_detail' pk=order.id %}"
+            class="block bg-surface-container-lowest border border-surface-container rounded-lg p-lg hover:border-primary-container transition-colors">
+            <div class="flex justify-between items-center">
+                <span class="font-label-md font-bold text-on-surface">{{ order.id }}</span>
+                <span class="font-body-md text-body-md text-on-surface-variant">{{ order.created_at|date:"M d, Y" }}</span>
+            </div>
+            <div class="flex justify-between items-center mt-sm">
+                <span class="font-body-md text-body-md text-on-surface-variant">{{ order.item_count }} item(s) &middot; {{ order.payment_method|upper }}</span>
+                <span class="font-label-md font-bold text-on-surface">Rs. {{ order.total_amount }}</span>
+            </div>
+            <div class="mt-sm flex gap-md">
+                <span class="font-body-sm text-body-sm px-2 py-xs rounded bg-surface-container text-on-surface-variant">{{ order.status|title }}</span>
+                <span class="font-body-sm text-body-sm px-2 py-xs rounded bg-surface-container text-on-surface-variant">{{ order.payment_status|title }}</span>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="bg-surface-container-lowest border border-surface-container rounded-lg p-xl text-center">
+        <p class="font-body-lg text-body-lg text-on-surface-variant mb-md">You have no orders yet.</p>
+        <a href="/" class="font-label-md font-bold text-primary hover:underline">Start Shopping</a>
+    </div>
+    {% endif %}
+</main>
+{% endblock %}

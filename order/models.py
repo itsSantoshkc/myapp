@@ -35,7 +35,7 @@ class Order(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, default='unpaid')
     payment_method = models.CharField(max_length=20, choices=PAYMENT_METHOD_CHOICES, default='esewa')
-    transaction_uuid = models.CharField(max_length=100, unique=True)
+    transaction_uuid = models.CharField(max_length=100, unique=True,null=True)
     subtotal = models.DecimalField(max_digits=10, decimal_places=2)
     tax_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     delivery_charge = models.DecimalField(max_digits=10, decimal_places=2, default=0)

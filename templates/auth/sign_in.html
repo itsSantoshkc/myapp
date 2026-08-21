@@ -60,6 +60,15 @@
                     <p class="font-body-md text-body-md text-on-surface-variant">Enter your credentials to access the
                         terminal.</p>
                 </div>
+                {% if messages %}
+                <div class="mb-lg space-y-sm">
+                    {% for message in messages %}
+                    <div class="font-body-md text-body-md px-md py-sm rounded-lg border {% if message.tags == 'error' %}bg-error-container text-on-error-container border-error{% else %}bg-primary-container text-on-primary-container border-primary{% endif %}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
                 <form class="space-y-lg" action="{% url 'signIn' %}" method="post">
                     {% csrf_token %}
                     <div class="space-y-sm">
@@ -75,8 +84,8 @@
                                 alternate_email
                             </span>
                             <input
-                                class="w-full pl-[48px] pr-md uppercase py-md bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md focus:outline-none focus:border-primary-container focus:ring-0 retro-orange-glow transition-all"
-                                id="email" placeholder="name@precision-pc.com" type="email" />
+                                class="w-full pl-[48px] pr-md py-md bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md focus:outline-none focus:border-primary-container focus:ring-0 retro-orange-glow transition-all"
+                                id="email" name="email" placeholder="name@precision-pc.com" type="email" autocapitalize="none" />
                         </div>
                     </div>
                     <div class="space-y-sm">
@@ -98,7 +107,7 @@
                                 lock
                             </span>
                             <input
-                                class="w-full uppercase text-on-surface pl-[48px] pr-md py-md bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md focus:outline-none focus:border-primary-container focus:ring-0 retro-orange-glow transition-all"
+                                class="w-full text-on-surface pl-[48px] pr-md py-md bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md focus:outline-none focus:border-primary-container focus:ring-0 retro-orange-glow transition-all"
                                 id="password" placeholder="••••••••••••" type="password" 
                                 name="password"
                                 />
